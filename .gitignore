@@ -87,7 +87,8 @@ buildNumber.properties
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
-
+${project.build.directory}/*
+${project.build.directory}
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
