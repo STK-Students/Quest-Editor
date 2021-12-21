@@ -9,6 +9,6 @@ public interface QuestService extends Remote {
 
     String sendMessage(String clientMessage) throws RemoteException;
 
-   List<String> sort(ArrayList<String> unsorted) throws RemoteException;
+    List<String> sort(ArrayList<String> unsorted) throws RemoteException;
 
 }
