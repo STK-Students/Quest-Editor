@@ -12,8 +12,8 @@ import java.rmi.server.UnicastRemoteObject;
 public class Server {
 
     public static void main(String[] args) throws RemoteException, AlreadyBoundException {
-        final QuestService server = new QuestServiceImpl();
-        QuestService stub = (QuestService) UnicastRemoteObject.exportObject(server, 1099);
+        final QuestService questService = new QuestServiceImpl();
+        QuestService stub = (QuestService) UnicastRemoteObject.exportObject(questService, 1099);
 
         Registry registry = LocateRegistry.createRegistry(1099);
         registry.bind("QuestService", stub);
