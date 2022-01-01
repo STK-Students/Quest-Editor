@@ -7,48 +7,51 @@ public class ColorUtil {
         for (Color color : colors) {
             result.append(color.getColorCode());
         }
-        return result.toString() + input + Color.RESET.getColorCode();
+        return result + input + Color.RESET.getColorCode();
     }
 
     public enum Color {
         //This
-        RESET("\033[0m"),
+        RESET("0"),
 
         //Normal Colours
-        RED("\033[31m"),
-        GREEN("\033[32m"),
-        YELLOW("\033[33m"),
-        BLUE("\033[34m"),
-        PURPLE("\033[35m"),
-        CYAN("\033[36m"),
-        WHITE("\033[97m"),
+        RED("31"),
+        GREEN("32"),
+        YELLOW("33"),
+        BLUE("34"),
+        PURPLE("35"),
+        CYAN("36"),
+        WHITE("97"),
 
         //Light Colours
-        LIGHT_RED("\033[91m"),
-        LIGHT_GREEN("\033[92m"),
-        LIGHT_YELLOW("\033[93m"),
-        LIGHT_BLUE("\033[94m"),
-        LIGHT_PURPLE("\033[95m"),
-        LIGHT_CYAN("\033[96m"),
+        LIGHT_RED("91"),
+        LIGHT_GREEN("92"),
+        LIGHT_YELLOW("93"),
+        LIGHT_BLUE("94"),
+        LIGHT_PURPLE("95"),
+        LIGHT_CYAN("96"),
 
         //Bold
-        BOLD("\033[1m"),
+        BOLD("1"),
 
         //Underline and no Underline
-        UNDERLINE("\033[4m"),
-        NO_UNDERLINE("\033[24m"),
+        UNDERLINE("4"),
+        NO_UNDERLINE("24"),
+
+        //Crazy shit
+        BLINK("5"),
 
         //Default
-        DEFAULT("\033[0m");
-
-        public String getColorCode() {
-            return colorCode;
-        }
+        DEFAULT("0");
 
         private final String colorCode;
 
         Color(String colorCode) {
             this.colorCode = colorCode;
+        }
+
+        public String getColorCode() {
+            return "\033[" + colorCode + "m";
         }
     }
 }
