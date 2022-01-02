@@ -20,4 +20,9 @@ public class User {
         this.role = role;
     }
 
+    public User(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 }
