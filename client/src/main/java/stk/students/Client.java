@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * Hello world!
  */
 public class Client {
-
+ public static String ipAdress;
     public static void main(String[] args) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(1099);
-        QuestService server = (QuestService) registry.lookup("QuestService");
+        QuestService server = (QuestService) registry.lookup("rmi://"+ ipAdress +":1099/Quest_Server");
 
         String responseMessage = server.sendMessage("Hallo!");
         System.out.println("[Server]: " + responseMessage);
