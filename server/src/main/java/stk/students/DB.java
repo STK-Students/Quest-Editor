@@ -18,6 +18,14 @@ public class DB {
     //Konstruktor
     public DB(){
 
+        dbConnection = "jdbc:postgresql://45.89.127.86:5432";
+
+        dbUser = "appdev_user";
+
+        dbPassword = "appdev_user";
+
+        con = DriverManager.getConnection(dbURL, "root", "");
+
     }
 
 
