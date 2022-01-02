@@ -21,7 +21,6 @@ public class Server {
         registry.bind("QuestService", stub);
 
         Naming.bind("rmi://" + ipAddress + ":1099/Quest_Server", stub);
-
     }
 }
 
