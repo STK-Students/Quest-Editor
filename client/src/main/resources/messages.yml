@@ -1,0 +1,5 @@
+intro:
+  message: "Wollen sie sich anmelden oder registrieren?"
+  awnsers:
+    - "Registrieren"
+    - "Anmelden"
