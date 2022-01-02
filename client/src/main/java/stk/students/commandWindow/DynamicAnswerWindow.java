@@ -1,8 +1,10 @@
 package stk.students.commandWindow;
 
-public class DynamicAnswerWindow extends BaseWindow{
+import static stk.students.ColorUtil.Color;
 
-    public DynamicAnswerWindow(final String message) {
-        super(message);
+public class DynamicAnswerWindow extends BaseWindow {
+
+    public DynamicAnswerWindow(final String message, Color... colors) {
+        super(message, colors);
     }
 }
