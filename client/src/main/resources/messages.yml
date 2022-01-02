@@ -1,5 +1,65 @@
+#Login- und Registrierungsprozess
 intro:
   message: "Wollen sie sich anmelden oder registrieren?"
-  awnsers:
+  answers:
     - "Registrieren"
     - "Anmelden"
+  error: "Ungültige Option."
+
+onboarding:
+  email:
+    message: "Wie lautet deine Email-Adresse?"
+    error: "Diese Email ist schon einem Account zugeordnet."
+  username:
+    message: "Wie heißt du?"
+    error: "Dieser Nutzername ist schon vergeben, überleg dir etwas anderes."
+  password:
+    message: "Wie soll dein Passwort lauten?"
+  done:
+    message: "Willkommen an Bord!"
+
+login:
+  username:
+    message: "Bitte gib deinen Nutzernamen ein."
+  password:
+    message: "Wie lautet dein Passwort?"
+    error: "Falsches Passwort oder ungültiger Nutzername!"
+
+overview:
+  message: "Aktuell eingeloggte Nutzer:"
+
+adminOptions:
+  message: "Du kannst als Admin auf die Nutzer-Verwaltung zugreifen."
+  answers:
+    - "Rolle zuweisen"
+    - "Rolle erstellen"
+    - "Programm beenden"
+  error: "Ungültige Option."
+
+#
+# Rollen-Verwaltung
+#
+userhierachy:
+  message: "Im folgenden werden alle vorhanden Nutzer inklusive deren Rollen ausgegeben. Bitte wähle einen Nutzer aus."
+  error: "Dieser Nutzer existiert nicht."
+
+userroleoverview:
+  message: "Alle verfügbaren Rollen werden ausgeben. Wähle eine Rolle aus um sie dem Nutzer zu geben oder zu entfernen."
+  error: "Die ausgewählte Rolle existiert nicht."
+
+userrole:
+  message: "Die Rolle wurde dem Nutzer entfernt."
+  error: "Die Rolle wurde dem Nutzer hinzugefügt."
+#
+# Rollen-Erstellung
+#
+createrole:
+  message: "Wie lautet der Name der neuen Rolle?"
+  error: "Dieser Name ist bereits vergeben."
+
+rolecolor:
+  message: "Alle verfügbaren Rollenfarben werden ausgegeben. Wähle eine Farbe aus."
+  error: "Diese Farbe existiert nicht."
+
+rolecreated:
+  message: "Die Rolle wurde mit der gewünschten Farbe erstellt."
