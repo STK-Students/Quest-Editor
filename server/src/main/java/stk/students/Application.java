@@ -46,9 +46,6 @@ public class Application implements QuestService {
     }
 
     public boolean loginUser(String email, String password) {
-        System.out.println("Hey, da kommt einer!");
-        System.out.println(email);
-        System.out.println(password);
         for (String key : list.keySet()) {
             User user = list.get(key);
             if (user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) {
