@@ -10,7 +10,7 @@ import java.util.Map;
 public class Application implements QuestService {
 
     private Map<String, Role> roles;
-    private Map<String, User> list;
+    private Map<String, User> users;
     private Map<String, User> activeUsers;
     private Database db;
 
@@ -18,7 +18,7 @@ public class Application implements QuestService {
         try {
             db = new Database();
             roles = db.loadRoles();
-            list = db.loadUser();
+            users = db.loadUser();
             createDefaultRole();
             activeUsers = new HashMap<>();
             db.loadRelationTable();
@@ -45,11 +45,11 @@ public class Application implements QuestService {
         }
     }
 
-    public boolean loginUser(String email, String password) {
-        for (String key : list.keySet()) {
-            User user = list.get(key);
-            if (user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) {
-                activeUsers.put(user.getEmail(), user);
+    public boolean loginUser(String username, String password) {
+        for (String key : users.keySet()) {
+            User user = users.get(key);
+            if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) {
+                activeUsers.put(user.getUsername(), user);
                 return true;
             }
         }
@@ -57,7 +57,7 @@ public class Application implements QuestService {
     }
 
     public void disconnectUser(User user) {
-        activeUsers.remove(user.getEmail());
+        activeUsers.remove(user.getUsername());
     }
 
 
@@ -68,8 +68,8 @@ public class Application implements QuestService {
             if(userAlreadyExists(username)){
                 db = new Database();
                 db.saveUser(user);
-                list.put(user.getEmail(), user);
-                if (list.size() == 1) {
+                users.put(user.getUsername(), user);
+                if (users.size() == 1) {
                     db.assignRoleToUser(user, roles.get("Administrator"));
                 }
                 loginUser(user.getEmail(), user.getPassword());
@@ -94,8 +94,8 @@ public class Application implements QuestService {
         return false;
     }
     public boolean userAlreadyExists(String username) {
-        for (String key : list.keySet()) {
-            User userItem = list.get(key);
+        for (String key : users.keySet()) {
+            User userItem = users.get(key);
             if (userItem.getUsername().equals(username)) {
                 return true;
             }

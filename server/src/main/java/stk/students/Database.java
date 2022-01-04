@@ -66,7 +66,7 @@ public class Database {
         ResultSet result = statement.executeQuery("Select * From public.user");
         while (result.next()) {
             User user = new User(result.getString("email"), result.getString("username"), result.getString("password"));
-            users.put(result.getString("email"), user);
+            users.put(result.getString("user"), user);
         }
         return users;
     }
