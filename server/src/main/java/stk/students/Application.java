@@ -114,6 +114,15 @@ public class Application implements QuestService {
         }
         return false;
     }
+    public void assignUserToRole(User user, Role role){
+        try {
+            db.assignRoleToUser(user, role);
+            user.addRole(role);
+            role.addUser(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public boolean userHasRole(User user, Role role) {
         for (Role roleItem : user.getRoleList()) {
