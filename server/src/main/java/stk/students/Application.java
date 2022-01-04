@@ -23,7 +23,9 @@ public class Application {
         }
     }
 
-
+    public void createDefaultRole(){
+        Role adminRole = new Role("Administrator", "");
+    }
 
     public boolean loginUser(String email, String password){
         for(String key  : this.lstUser.keySet()){
@@ -75,6 +77,11 @@ public class Application {
         return false;
     }
     public boolean userHasRole(User user, Role role){
+        for(Role roleItem : user.getRoleList()){
+            if(roleItem.getName().equalsIgnoreCase(role.getName())){
+                return true;
+            }
+        }
         return false;
     }
 }
