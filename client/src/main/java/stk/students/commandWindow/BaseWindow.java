@@ -1,24 +1,39 @@
 package stk.students.commandWindow;
 
 import lombok.Getter;
+import stk.students.Color;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.Scanner;
 
-import static stk.students.ColorUtil.Color;
-import static stk.students.ColorUtil.colorize;
+import static stk.students.Client.config;
 
 public abstract class BaseWindow {
+
+    Map instruction;
+    String message;
 
     @Getter
     String userAnswer;
 
-    public BaseWindow(final String message, Color... colors) {
-        System.out.println(colorize(message, colors));
+    public BaseWindow(String configKey, Color... colors) {
+        instruction = (Map) config.getConfigData().get(configKey);
+        parseInstruction(configKey);
+        printMessage();
         startScanning();
     }
 
-    private void startScanning() {
+
+    public void parseInstruction(String configKey) {
+        message = (String) instruction.get("message");
+    }
+
+    public void printMessage() {
+        System.out.println(message);
+    }
+
+    public void startScanning() {
         Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         userAnswer = scanner.nextLine();
     }

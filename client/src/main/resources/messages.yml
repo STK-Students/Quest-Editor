@@ -1,4 +1,11 @@
-#Login- und Registrierungsprozess
+#
+# Allgemein
+#
+possible_answer: "Mögliche Antworten:"
+
+#
+# Login- und Registrierungsprozess
+#
 intro:
   message: "Wollen sie sich anmelden oder registrieren?"
   answers:
@@ -50,6 +57,7 @@ userroleoverview:
 userrole:
   message: "Die Rolle wurde dem Nutzer entfernt."
   error: "Die Rolle wurde dem Nutzer hinzugefügt."
+
 #
 # Rollen-Erstellung
 #
