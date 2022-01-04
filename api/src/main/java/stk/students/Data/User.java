@@ -23,9 +23,9 @@ public class User {
         this.roleList = roleList;
     }
 
-    public User(String email, String username, String password) {
-        this.email = email;
+    public User(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
     }
 

@@ -54,10 +54,10 @@ public class Database {
         Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.assigned_to");
         while (result.next()) {
-            User user = users.get(result.getString("user_email"));
+            User user = users.get(result.getString("user_username"));
             user.addRole(roles.get(result.getString("role_name")));
             Role role = roles.get(result.getString("role_name"));
-            role.addUser(users.get(result.getString("user_email")));
+            role.addUser(users.get(result.getString("user_username")));
         }
     }
 
@@ -65,8 +65,8 @@ public class Database {
         Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.user");
         while (result.next()) {
-            User user = new User(result.getString("email"), result.getString("username"), result.getString("password"));
-            users.put(result.getString("user"), user);
+            User user = new User(result.getString("username"), result.getString("email"),  result.getString("password"));
+            users.put(result.getString("username"), user);
         }
         return users;
     }
