@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class Application {
     private HashMap<String, Role> lstRole;
     private HashMap<String, User> lstUser;
+    private HashMap<String, User> activeUser;
     private Database db;
 
     public Application(){
@@ -18,6 +19,7 @@ public class Application {
             this.createDefaultRole(); // creates default role
             this.lstRole = db.loadRoles(); // load role from database
             this.lstUser = db.loadUser(); // load user from database
+            this.activeUser = new HashMap<>();
             this.db.loadRelationTable(); // load relation table from database
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,11 +40,16 @@ public class Application {
         for(String key  : this.lstUser.keySet()){
             User user = lstUser.get(key);
             if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)){
+                this.activeUser.put(user.getEmail(), user);
                 return true;
             }
         }
         return false;
     }
+    public void disconnectUser(User user){
+        this.activeUser.remove(user.getEmail());
+    }
+
     public boolean registerUser(String email, String username, String password){
         User user = new User(email, username, password);
         try {
