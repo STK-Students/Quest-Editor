@@ -43,7 +43,6 @@ public class ConfigManager {
              message = (String) configData.get(configKey);
         } catch (ClassCastException exception) {
             throw new UnsupportedOperationException("You can only use this on method on config keys that hold a string.");
-
         }
         return ColorUtil.colorize(message, colors);
     }

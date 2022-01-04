@@ -42,7 +42,7 @@ public class Database {
         Statement statement = this.dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.role");
         while (result.next()) {
-            this.lstRoles.put(result.getString("name"), new Role(result.getString("name"), result.getString("color"), null));
+            this.lstRoles.put(result.getString("name"), new Role(result.getString("name"), Color.valueOf(result.getString("color")), null));
         }
         return lstRoles;
     }
@@ -85,7 +85,7 @@ public class Database {
         String query = "Insert into public.role Values(?,?)";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
         preparedStatement.setString(1, role.getName());
-        preparedStatement.setString(2, role.getColor());
+        preparedStatement.setString(2, role.getColor().toString());
         preparedStatement.execute();
     }
 
