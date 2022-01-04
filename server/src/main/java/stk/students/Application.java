@@ -27,7 +27,7 @@ public class Application {
     }
 
     public void createDefaultRole(){
-        Role adminRole = new Role("Administrator", "");
+        Role adminRole = new Role("Administrator", Color.RED);
         try {
             this.db.saveRole(adminRole);
             this.lstRole.put(adminRole.getName(), adminRole);
@@ -67,7 +67,7 @@ public class Application {
         return false;
     }
 
-    public boolean createRole(String name, String color){
+    public boolean createRole(String name, Color color){
         Role role = new Role(name, color);
         try {
             this.db = new Database();
