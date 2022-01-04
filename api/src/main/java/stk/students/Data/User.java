@@ -16,9 +16,9 @@ public class User {
     @Getter @Setter
     private List<Role> roleList = new ArrayList<>();
 
-    public User(String email, String username, String password, ArrayList<Role> roleList){
-        this.email = email;
+    public User(String username, String email, String password, ArrayList<Role> roleList){
         this.username = username;
+        this.email = email;
         this.password = password;
         this.roleList = roleList;
     }

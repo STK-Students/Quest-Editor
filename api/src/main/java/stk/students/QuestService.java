@@ -8,9 +8,9 @@ import java.rmi.RemoteException;
 
 public interface QuestService extends Remote {
 
-    boolean loginUser(String email, String password) throws RemoteException;
+    boolean loginUser(String username, String password) throws RemoteException;
 
-    boolean registerUser(String email, String username, String password) throws RemoteException;
+    boolean registerUser(String username, String email, String password) throws RemoteException;
 
     void disconnectUser(User user) throws RemoteException;
 

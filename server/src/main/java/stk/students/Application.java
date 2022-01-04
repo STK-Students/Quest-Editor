@@ -5,6 +5,7 @@ import stk.students.Data.User;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Application implements QuestService {
@@ -30,12 +31,12 @@ public class Application implements QuestService {
     public void createDefaultRole() {
         Role adminRole = new Role("Administrator", Color.RED);
         boolean temp = false;
-        for(String roleItem : roles.keySet()){
-            if(roles.get(roleItem).getName().equalsIgnoreCase("Administrator")){
+        for (String roleItem : roles.keySet()) {
+            if (roles.get(roleItem).getName().equalsIgnoreCase("Administrator")) {
                 temp = true;
             }
         }
-        if(!temp){
+        if (!temp) {
             try {
                 db.saveRole(adminRole);
                 roles.put(adminRole.getName(), adminRole);
@@ -46,8 +47,7 @@ public class Application implements QuestService {
     }
 
     public boolean loginUser(String username, String password) {
-        for (String key : users.keySet()) {
-            User user = users.get(key);
+        for (User user : users.values()) {
             if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) {
                 activeUsers.put(user.getUsername(), user);
                 return true;
@@ -61,20 +61,20 @@ public class Application implements QuestService {
     }
 
 
-
-    public boolean registerUser(String email, String username, String password) {
+    public boolean registerUser(String username, String email, String password) {
+        if (userAlreadyExists(username)) {
+            return false;
+        }
         User user = new User(email, username, password);
         try {
-            if(userAlreadyExists(username)){
-                db = new Database();
-                db.saveUser(user);
-                users.put(user.getUsername(), user);
-                if (users.size() == 1) {
-                    db.assignRoleToUser(user, roles.get("Administrator"));
-                }
-                loginUser(user.getEmail(), user.getPassword());
-                return true;
+            db = new Database();
+            db.saveUser(user);
+            users.put(user.getUsername(), user);
+            if (users.size() == 1) {
+                db.assignRoleToUser(user, roles.get("Administrator"));
             }
+            loginUser(user.getEmail(), user.getPassword());
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,10 +93,10 @@ public class Application implements QuestService {
         }
         return false;
     }
+
     public boolean userAlreadyExists(String username) {
-        for (String key : users.keySet()) {
-            User userItem = users.get(key);
-            if (userItem.getUsername().equals(username)) {
+        for (User user : users.values()) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
                 return true;
             }
         }
@@ -104,16 +104,15 @@ public class Application implements QuestService {
     }
 
     public boolean roleAlreadyExists(String roleName) {
-        for (String key : roles.keySet()) {
-            Role roleItem = roles.get(key);
-            if (roleItem.getName().equals(roleName)) {
+        for (Role role : roles.values()) {
+            if (role.getName().equals(roleName)) {
                 return true;
             }
         }
-
         return false;
     }
-    public void assignUserToRole(User user, Role role){
+
+    public void assignUserToRole(User user, Role role) {
         try {
             db.assignRoleToUser(user, role);
             user.addRole(role);
@@ -122,12 +121,13 @@ public class Application implements QuestService {
             e.printStackTrace();
         }
     }
-    public void removeUserFromRole(User user, Role role){
+
+    public void removeUserFromRole(User user, Role role) {
         try {
             db.removeRoleFromUser(user, role);
             user.removeRole(role);
             role.removeUser(user);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
