@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  * Hello world!
@@ -16,8 +15,10 @@ public class Client {
     public static final String ipAddress = "127.0.0.1";
     public static ConfigManager config = new ConfigManager();
 
+    private static QuestService remote;
+
     public static void main(String[] args) throws RemoteException, NotBoundException, MalformedURLException {
-        //QuestService server = (QuestService) Naming.lookup("rmi://" + ipAddress + ":1099/Quest_Server");
+        remote = (QuestService) Naming.lookup("rmi://" + ipAddress + ":1099/Quest_Server");
 
         try {
             new ConfigManager();
@@ -25,12 +26,13 @@ public class Client {
             e.printStackTrace();
         }
 
-        //Start GUI Logic
         showLoginAndRegisterWindow();
     }
 
-    private static void showLoginAndRegisterWindow() {
+    private static void showLoginAndRegisterWindow() throws RemoteException {
         FixedAnswerWindow email = new FixedAnswerWindow("intro", Color.BLUE);
         System.out.println(email.getUserAnswer());
+
+        remote.loginUser("salty@gmail.com", "2134");
     }
 }

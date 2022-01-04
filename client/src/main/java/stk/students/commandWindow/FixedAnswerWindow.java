@@ -29,7 +29,6 @@ public class FixedAnswerWindow extends BaseWindow {
         return false;
     }
 
-    @Override
     public void printMessage() {
         super.printMessage();
         System.out.println(config.getMessage("possible_answer"));

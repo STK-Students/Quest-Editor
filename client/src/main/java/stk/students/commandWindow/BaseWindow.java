@@ -20,7 +20,7 @@ public abstract class BaseWindow {
     public BaseWindow(String configKey, Color... colors) {
         instruction = (Map) config.getConfigData().get(configKey);
         parseInstruction(configKey);
-        printMessage();
+        printMessage(colors);
         startScanning();
     }
 
@@ -29,7 +29,7 @@ public abstract class BaseWindow {
         message = (String) instruction.get("message");
     }
 
-    public void printMessage() {
+    public void printMessage(Color... colors) {
         System.out.println(message);
     }
 

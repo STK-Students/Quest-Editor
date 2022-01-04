@@ -5,8 +5,12 @@ import lombok.Setter;
 import stk.students.Data.Role;
 import stk.students.Data.User;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 
 public class Database {
@@ -25,46 +29,47 @@ public class Database {
     private Connection dbConnection;
     @Setter
     @Getter
-    private HashMap<String, Role> lstRoles;
+    private HashMap<String, Role> roles;
     @Setter
     @Getter
-    private HashMap<String, User> lstUser;
+    private HashMap<String, User> users;
 
     //Konstruktor
     public Database() throws SQLException {
-        this.dbConnection = DriverManager.getConnection(this.dbUrl, this.dbUser, this.dbPassword);
+        dbConnection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
 
-    //Functions
+
     public HashMap<String, Role> loadRoles() throws SQLException {
-        this.lstRoles = new HashMap<String, Role>();
-        Statement statement = this.dbConnection.createStatement();
+        roles = new HashMap<String, Role>();
+        Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.role");
         while (result.next()) {
-            this.lstRoles.put(result.getString("name"), new Role(result.getString("name"), Color.valueOf(result.getString("color")), null));
+            roles.put(result.getString("name"), new Role(result.getString("name"), Color.valueOf(result.getString("color"))));
         }
-        return lstRoles;
+        return roles;
     }
 
     public void loadRelationTable() throws SQLException {
-        Statement statement = this.dbConnection.createStatement();
+        Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.assigned_to");
         while (result.next()) {
-            this.lstUser.get(result.getString("user_email")).addRole(lstRoles.get(result.getString("role_name")));
-            this.lstRoles.get(result.getString("role_name")).addUser(lstUser.get(result.getString("user_email")));
+            users.get(result.getString("user_email")).addRole(roles.get(result.getString("role_name")));
+            Role role = roles.get(result.getString("role_name"));
+            role.addUser(users.get(result.getString("user_email")));
         }
     }
 
     public HashMap<String, User> loadUser() throws SQLException {
-        this.lstUser = new HashMap<String, User>();
-        Statement statement = this.dbConnection.createStatement();
+        users = new HashMap<>();
+        Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.user");
         while (result.next()) {
             User user = new User(result.getString("email"), result.getString("username"), result.getString("password"));
-            this.lstUser.put(result.getString("email"), user);
+            users.put(result.getString("email"), user);
         }
-        return lstUser;
+        return users;
     }
 
     public void saveUser(User user) throws SQLException {
@@ -98,6 +103,6 @@ public class Database {
     }
 
     public void closeConnection() throws SQLException {
-        this.dbConnection.close();
+        dbConnection.close();
     }
 }

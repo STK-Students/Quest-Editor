@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     @Getter @Setter
@@ -13,7 +14,7 @@ public class User {
     @Getter @Setter
     private String password;
     @Getter @Setter
-    private ArrayList<Role> roleList;
+    private List<Role> roleList = new ArrayList<>();
 
     public User(String email, String username, String password, ArrayList<Role> roleList){
         this.email = email;

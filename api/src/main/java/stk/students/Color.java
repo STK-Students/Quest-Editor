@@ -1,7 +1,7 @@
 package stk.students;
 
 public enum Color {
-    //This
+    //This rests all color formatting
     RESET("0"),
 
     //Normal Colours
@@ -40,6 +40,10 @@ public enum Color {
         this.colorCode = colorCode;
     }
 
+    /**
+     * Builds an ASCII color
+     * @return
+     */
     public String getColorCode() {
         return "\033[" + colorCode + "m";
     }
