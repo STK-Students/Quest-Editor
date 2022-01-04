@@ -3,11 +3,12 @@ package stk.students;
 import stk.students.Data.Role;
 import stk.students.Data.User;
 
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Application {
+public class Application implements QuestService {
     private HashMap<String, Role> lstRole;
     private HashMap<String, User> lstUser;
     private HashMap<String, User> activeUser;

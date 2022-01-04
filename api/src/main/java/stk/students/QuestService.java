@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface QuestService extends Remote {
-
-    String sendMessage(String clientMessage) throws RemoteException;
-
-    List<String> sort(ArrayList<String> unsorted) throws RemoteException;
-
+    boolean loginUser(String email, String password) throws RemoteException;
+    boolean registerUser(String email, String username, String password) throws RemoteException;
 }
