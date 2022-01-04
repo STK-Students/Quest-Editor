@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Database {
     //Attribute
@@ -29,10 +30,10 @@ public class Database {
     private Connection dbConnection;
     @Setter
     @Getter
-    private HashMap<String, Role> roles;
+    private Map<String, Role> roles = new HashMap<>();
     @Setter
     @Getter
-    private HashMap<String, User> users;
+    private Map<String, User> users = new HashMap<>();
 
     //Konstruktor
     public Database() throws SQLException {
@@ -40,9 +41,7 @@ public class Database {
     }
 
 
-
-    public HashMap<String, Role> loadRoles() throws SQLException {
-        roles = new HashMap<String, Role>();
+    public Map<String, Role> loadRoles() throws SQLException {
         Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.role");
         while (result.next()) {
@@ -55,14 +54,14 @@ public class Database {
         Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.assigned_to");
         while (result.next()) {
-            users.get(result.getString("user_email")).addRole(roles.get(result.getString("role_name")));
+            User user = users.get(result.getString("user_email"));
+            user.addRole(roles.get(result.getString("role_name")));
             Role role = roles.get(result.getString("role_name"));
             role.addUser(users.get(result.getString("user_email")));
         }
     }
 
-    public HashMap<String, User> loadUser() throws SQLException {
-        users = new HashMap<>();
+    public Map<String, User> loadUser() throws SQLException {
         Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.user");
         while (result.next()) {
