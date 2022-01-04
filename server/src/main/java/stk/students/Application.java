@@ -10,45 +10,49 @@ import java.util.HashMap;
 public class Application {
     private HashMap<String, Role> lstRole;
     private HashMap<String, User> lstUser;
+    private Database db;
 
     public Application(){
         try {
-            Database db = new Database();
+            this.db = new Database();
             this.lstRole = db.loadRoles();
             this.lstUser = db.loadUser();
-            db.loadRelationTable();
-            db.closeConnection();
+            this.db.loadRelationTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public boolean validateUserInput(){
-        return false;
-    }
+
+
+
     public boolean loginUser(String email, String password){
-        boolean temp = false;
         for(String key  : this.lstUser.keySet()){
             User user = lstUser.get(key);
             if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)){
-                temp = true;
+                return true;
             }
         }
-        return temp;
+        return false;
     }
     public boolean registerUser(String email, String username, String password){
         try {
-            Database db = new Database();
-            db.saveUser(new User(email, username, password));
+            this.db = new Database();
+            this.db.saveUser(new User(email, username, password));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-    public boolean administrateUser(){
-        return false;
-    }
+
     public boolean createRole(String name, String color){
+        try {
+            this.db = new Database();
+            this.db.saveRole(new Role(name, color));
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
