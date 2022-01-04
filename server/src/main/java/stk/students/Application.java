@@ -14,10 +14,11 @@ public class Application {
 
     public Application(){
         try {
-            this.db = new Database();
-            this.lstRole = db.loadRoles();
-            this.lstUser = db.loadUser();
-            this.db.loadRelationTable();
+            this.db = new Database(); // initialize database connection
+            this.createDefaultRole(); // creates default role
+            this.lstRole = db.loadRoles(); // load role from database
+            this.lstUser = db.loadUser(); // load user from database
+            this.db.loadRelationTable(); // load relation table from database
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -25,6 +26,11 @@ public class Application {
 
     public void createDefaultRole(){
         Role adminRole = new Role("Administrator", "");
+        try {
+            this.db.saveRole(adminRole);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean loginUser(String email, String password){
