@@ -28,6 +28,7 @@ public class Application {
         Role adminRole = new Role("Administrator", "");
         try {
             this.db.saveRole(adminRole);
+            this.lstRole.put(adminRole.getName(), adminRole);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,9 +44,15 @@ public class Application {
         return false;
     }
     public boolean registerUser(String email, String username, String password){
+        User user = new User(email, username, password);
         try {
             this.db = new Database();
-            this.db.saveUser(new User(email, username, password));
+            this.db.saveUser(user);
+            this.lstUser.put(user.getEmail(), user);
+            if(this.lstUser.size() == 1){
+                this.db.assignRoleToUser(user, this.lstRole.get("Administrator"));
+            }
+            this.loginUser(user.getEmail(), user.getPassword());
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,9 +61,11 @@ public class Application {
     }
 
     public boolean createRole(String name, String color){
+        Role role = new Role(name, color);
         try {
             this.db = new Database();
-            this.db.saveRole(new Role(name, color));
+            this.db.saveRole(role);
+            this.lstRole.put(role.getName(), role);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
