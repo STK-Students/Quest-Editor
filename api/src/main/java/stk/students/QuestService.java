@@ -1,5 +1,8 @@
 package stk.students;
 
+import stk.students.Data.Role;
+import stk.students.Data.User;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
