@@ -35,11 +35,7 @@ public class Role {
     }
 
     public void removeUser(User user){
-        for(User userItem : userList){
-            if(userItem.getEmail().equalsIgnoreCase(user.getEmail())){
-                userList.remove(userItem);
-            }
-        }
+        userList.removeIf(userItem -> userItem.getEmail().equalsIgnoreCase(user.getEmail()));
     }
 
 }

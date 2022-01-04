@@ -35,7 +35,7 @@ public class Application implements QuestService {
                 temp = true;
             }
         }
-        if(temp == false){
+        if(!temp){
             try {
                 db.saveRole(adminRole);
                 roles.put(adminRole.getName(), adminRole);
