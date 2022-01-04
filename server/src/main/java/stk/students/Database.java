@@ -100,7 +100,12 @@ public class Database {
         preparedStatement.setString(2, role.getName());
         preparedStatement.execute();
     }
-
+    public void removeRoleFromUser(User user, Role role) throws SQLException {
+        String query = "Delete From public.assigned_to Where user_email=? and role_name=?";
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, user.getEmail());
+        preparedStatement.setString(2, role.getName());
+    }
     public void closeConnection() throws SQLException {
         dbConnection.close();
     }

@@ -14,8 +14,8 @@ public interface QuestService extends Remote {
     void createDefaultRole() throws RemoteException;
     void disconnectUser(User user) throws RemoteException;
     boolean createRole(String name, Color color);
-    boolean userAlreadyExists(User user);
-    boolean roleAlreadyExists(Role role);
+    boolean userAlreadyExists(String username);
+    boolean roleAlreadyExists(String roleName);
     void assignUserToRole(User user, Role role);
     boolean userHasRole(User user, Role role);
 }

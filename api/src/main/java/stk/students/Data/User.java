@@ -32,4 +32,11 @@ public class User {
     public void addRole(Role role){
         this.roleList.add(role);
     }
+    public void removeRole(Role role){
+        for(Role roleItem : roleList){
+            if(roleItem.getName().equalsIgnoreCase(role.getName())){
+                roleList.remove(roleItem);
+            }
+        }
+    }
 }

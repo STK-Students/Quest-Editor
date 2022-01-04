@@ -16,12 +16,12 @@ public class Application implements QuestService {
 
     public Application() {
         try {
-            db = new Database(); // initialize database connection
-            roles = db.loadRoles(); // load role from database
-            list = db.loadUser(); // load user from database
-            createDefaultRole(); // creates default role
+            db = new Database();
+            roles = db.loadRoles();
+            list = db.loadUser();
+            createDefaultRole();
             activeUsers = new HashMap<>();
-            db.loadRelationTable(); // load relation table from database
+            db.loadRelationTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,14 +65,16 @@ public class Application implements QuestService {
     public boolean registerUser(String email, String username, String password) {
         User user = new User(email, username, password);
         try {
-            db = new Database();
-            db.saveUser(user);
-            list.put(user.getEmail(), user);
-            if (list.size() == 1) {
-                db.assignRoleToUser(user, roles.get("Administrator"));
+            if(userAlreadyExists(username)){
+                db = new Database();
+                db.saveUser(user);
+                list.put(user.getEmail(), user);
+                if (list.size() == 1) {
+                    db.assignRoleToUser(user, roles.get("Administrator"));
+                }
+                loginUser(user.getEmail(), user.getPassword());
+                return true;
             }
-            loginUser(user.getEmail(), user.getPassword());
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,24 +93,24 @@ public class Application implements QuestService {
         }
         return false;
     }
-
-    public boolean userAlreadyExists(User user) {
+    public boolean userAlreadyExists(String username) {
         for (String key : list.keySet()) {
             User userItem = list.get(key);
-            if (userItem.getEmail().equalsIgnoreCase(user.getEmail()) && userItem.getUsername().equals(user.getUsername())) {
+            if (userItem.getUsername().equals(username)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean roleAlreadyExists(Role role) {
+    public boolean roleAlreadyExists(String roleName) {
         for (String key : roles.keySet()) {
             Role roleItem = roles.get(key);
-            if (roleItem.getName().equals(role.getName())) {
+            if (roleItem.getName().equals(roleName)) {
                 return true;
             }
         }
+
         return false;
     }
     public void assignUserToRole(User user, Role role){
@@ -117,6 +119,15 @@ public class Application implements QuestService {
             user.addRole(role);
             role.addUser(user);
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void removeUserFromRole(User user, Role role){
+        try {
+            db.removeRoleFromUser(user, role);
+            user.removeRole(role);
+            role.removeUser(user);
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }
