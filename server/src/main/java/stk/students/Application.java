@@ -17,7 +17,7 @@ public class Application implements QuestService {
             this.db = new Database(); // initialize database connection
             this.lstRole = db.loadRoles(); // load role from database
             this.lstUser = db.loadUser(); // load user from database
-            // this.createDefaultRole(); // creates default role
+            this.createDefaultRole(); // creates default role
             this.activeUser = new HashMap<>();
             this.db.loadRelationTable(); // load relation table from database
         } catch (SQLException e) {
@@ -27,11 +27,19 @@ public class Application implements QuestService {
 
     public void createDefaultRole() {
         Role adminRole = new Role("Administrator", Color.RED);
-        try {
-            this.db.saveRole(adminRole);
-            this.lstRole.put(adminRole.getName(), adminRole);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        boolean temp = false;
+        for(String roleItem : lstRole.keySet()){
+            if(lstRole.get(roleItem).getName().equalsIgnoreCase("Administrator")){
+                temp = true;
+            }
+        }
+        if(temp == false){
+            try {
+                this.db.saveRole(adminRole);
+                this.lstRole.put(adminRole.getName(), adminRole);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -52,6 +60,8 @@ public class Application implements QuestService {
     public void disconnectUser(User user) {
         this.activeUser.remove(user.getEmail());
     }
+
+
 
     public boolean registerUser(String email, String username, String password) {
         User user = new User(email, username, password);
