@@ -5,17 +5,16 @@ import stk.students.Data.User;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-public class Application implements QuestService {
+public class QuestServiceImpl implements QuestService {
 
     private Map<String, Role> roles;
     private Map<String, User> users;
     private Map<String, User> activeUsers;
     private Database db;
 
-    public Application() {
+    public QuestServiceImpl() {
         try {
             db = new Database();
             roles = db.loadRoles();
@@ -28,6 +27,9 @@ public class Application implements QuestService {
         }
     }
 
+    /**
+     * Tries to create the default "Administrator" role.
+     */
     public void createDefaultRole() {
         Role adminRole = new Role("Administrator", Color.RED);
         boolean temp = false;

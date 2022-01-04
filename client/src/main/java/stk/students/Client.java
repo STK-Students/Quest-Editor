@@ -1,5 +1,6 @@
 package stk.students;
 
+import stk.students.commandWindow.DynamicAnswerWindow;
 import stk.students.commandWindow.FixedAnswerWindow;
 
 import java.net.MalformedURLException;
@@ -30,9 +31,38 @@ public class Client {
     }
 
     private static void showLoginAndRegisterWindow() throws RemoteException {
-        FixedAnswerWindow email = new FixedAnswerWindow("intro", Color.BLUE);
-        System.out.println(email.getUserAnswer());
+        FixedAnswerWindow intro = new FixedAnswerWindow("intro", Color.BLUE);
 
-        remote.loginUser("salty@gmail.com", "2134");
+        if ("anmelden".equals(intro.getUserAnswer())) {
+            login();
+
+        } else if ("registrieren".equals(intro.getUserAnswer())) {
+            register();
+        }
+    }
+
+    private static void login() throws RemoteException {
+        DynamicAnswerWindow usernameWindow = new DynamicAnswerWindow("login.username");
+        DynamicAnswerWindow passwordWindow = new DynamicAnswerWindow("login.password");
+
+        String username = usernameWindow.getUserAnswer();
+        String password = passwordWindow.getUserAnswer();
+        if (remote.userAlreadyExists(username)) {
+            boolean success = remote.loginUser(username, password);
+
+            if (!success);
+        }
+    }
+
+    private static void register() throws RemoteException {
+        DynamicAnswerWindow emailWindow = new DynamicAnswerWindow("onboarding.email");
+        DynamicAnswerWindow usernameWindow = new DynamicAnswerWindow("onboarding.username");
+        DynamicAnswerWindow passwordWindow = new DynamicAnswerWindow("onboarding.password");
+        System.out.println(config.getMessage("onboarding.done.message"));
+
+        String email = emailWindow.getUserAnswer();
+        String username = usernameWindow.getUserAnswer();
+        String password = passwordWindow.getUserAnswer();
+        boolean success = remote.registerUser(username, email, password);
     }
 }

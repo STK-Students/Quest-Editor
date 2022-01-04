@@ -15,7 +15,7 @@ public class Server {
     public static String ipAddress = "127.0.0.1";
 
     public static void main(String[] args) throws RemoteException, AlreadyBoundException, java.net.MalformedURLException {
-        QuestService stub = (QuestService) UnicastRemoteObject.exportObject(new Application(), 1099);
+        QuestService stub = (QuestService) UnicastRemoteObject.exportObject(new QuestServiceImpl(), 1099);
 
         Registry registry = LocateRegistry.createRegistry(1099);
         registry.bind("QuestService", stub);
