@@ -25,12 +25,13 @@ onboarding:
   done:
     message: "Willkommen an Bord!"
 
-login:
-  username:
-    message: "Bitte gib deinen Nutzernamen ein."
-  password:
-    message: "Wie lautet dein Passwort?"
-    error: "Falsches Passwort oder ungültiger Nutzername!"
+
+loginusername:
+  message: "Bitte gib deinen Nutzernamen ein."
+  error: "Falscher oder nicht vorhandener Benutzer!"
+loginpassword:
+  message: "Wie lautet dein Passwort?"
+  error: "Falsches Passwort oder ungültiger Nutzername!"
 
 overview:
   message: "Aktuell eingeloggte Nutzer:"
@@ -46,28 +47,32 @@ adminOptions:
 #
 # Rollen-Verwaltung
 #
-userhierachy:
-  message: "Im folgenden werden alle vorhanden Nutzer inklusive deren Rollen ausgegeben. Bitte wähle einen Nutzer aus."
-  error: "Dieser Nutzer existiert nicht."
 
-userroleoverview:
-  message: "Alle verfügbaren Rollen werden ausgeben. Wähle eine Rolle aus um sie dem Nutzer zu geben oder zu entfernen."
-  error: "Die ausgewählte Rolle existiert nicht."
-
-userrole:
-  message: "Die Rolle wurde dem Nutzer entfernt."
-  error: "Die Rolle wurde dem Nutzer hinzugefügt."
+assignroleoptions:
+    answers:
+      - "Hinzufügen"
+      - "Entfernen"
+    error: "Ungültige Option"
+assignroleuserhierachy:
+    message: "Im folgenden werden alle vorhanden Nutzer inklusive deren Rollen ausgegeben. Bitte wähle einen Nutzer aus."
+    error: "Dieser Nutzer existiert nicht."
+assignroleuserroleoverview:
+    message: "Alle verfügbaren Rollen werden ausgeben. Wähle eine Rolle aus um sie dem Nutzer zu geben oder zu entfernen."
+    error: "Die ausgewählte Rolle existiert nicht."
+assignroleuserrole:
+    message: "Die Rolle wurde dem Nutzer entfernt."
+    error: "Die Rolle wurde dem Nutzer hinzugefügt."
 
 #
 # Rollen-Erstellung
 #
 createrole:
+  message: "Die Rolle wurde mit der gewünschten Farbe erstellt."
+  error: "Es konnte keine Rolle erstellt werden"
+createrolename:
   message: "Wie lautet der Name der neuen Rolle?"
   error: "Dieser Name ist bereits vergeben."
+createrolecolor:
+  message: "Wie soll die Farbe der neuen Rolle sein?"
+  error: "Diese Farbe existiert nicht"
 
-rolecolor:
-  message: "Alle verfügbaren Rollenfarben werden ausgegeben. Wähle eine Farbe aus."
-  error: "Diese Farbe existiert nicht."
-
-rolecreated:
-  message: "Die Rolle wurde mit der gewünschten Farbe erstellt."

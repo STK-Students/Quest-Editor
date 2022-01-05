@@ -48,20 +48,19 @@ public class QuestServiceImpl implements QuestService {
         }
     }
 
-    public boolean loginUser(String username, String password) {
+    public User loginUser(String username, String password) {
         for (User user : users.values()) {
             if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) {
                 activeUsers.put(user.getUsername(), user);
-                return true;
+                return user;
             }
         }
-        return false;
+        return null;
     }
 
     public void disconnectUser(User user) {
         activeUsers.remove(user.getUsername());
     }
-
 
     public boolean registerUser(String username, String email, String password) {
         if (userAlreadyExists(username)) {
@@ -105,18 +104,20 @@ public class QuestServiceImpl implements QuestService {
         return false;
     }
 
-    public boolean roleAlreadyExists(String roleName) {
+    public boolean roleAlreadyExists(String rolename) {
         for (Role role : roles.values()) {
-            if (role.getName().equals(roleName)) {
+            if (role.getName().equals(rolename)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void assignUserToRole(User user, Role role) {
+    public void assignUserToRole(String username, String rolename) {
+        User user = users.get(username);
+        Role role = roles.get(rolename);
         try {
-            db.assignRoleToUser(user, role);
+            db.assignRoleToUser(users.get(username), roles.get(rolename));
             user.addRole(role);
             role.addUser(user);
         } catch (SQLException e) {
@@ -124,7 +125,9 @@ public class QuestServiceImpl implements QuestService {
         }
     }
 
-    public void removeUserFromRole(User user, Role role) {
+    public void removeUserFromRole(String username, String rolename) {
+        User user = users.get(username);
+        Role role = roles.get(rolename);
         try {
             db.removeRoleFromUser(user, role);
             user.removeRole(role);
@@ -134,12 +137,15 @@ public class QuestServiceImpl implements QuestService {
         }
     }
 
-    public boolean userHasRole(User user, Role role) {
-        for (Role roleItem : user.getRoleList()) {
-            if (roleItem.getName().equalsIgnoreCase(role.getName())) {
+    public boolean userHasRole(User user, String roleName) {
+        for (Role role : user.getRoleList()) {
+            if (role.getName().equalsIgnoreCase(roleName)) {
                 return true;
             }
         }
         return false;
     }
+    public Map<String, User> getUsers(){ return users; }
+    public Map<String, Role> getRoles(){ return roles; }
+    public Map<String, User> getActiveUsers(){ return activeUsers; }
 }
