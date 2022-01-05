@@ -4,10 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import stk.students.Color;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Role {
+public class Role implements Serializable {
 
     @Getter
     @Setter
@@ -17,7 +18,7 @@ public class Role {
     private Color color;
     @Getter
     @Setter
-    private List<User> userList = new ArrayList<>();
+    private ArrayList<User> userList = new ArrayList<>();
 
     public Role(String name, Color color, ArrayList<User> userList) {
         this.name = name;

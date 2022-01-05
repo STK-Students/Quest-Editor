@@ -15,7 +15,7 @@ public class User implements Serializable {
     @Getter @Setter
     private String password;
     @Getter @Setter
-    private List<Role> roleList = new ArrayList<>();
+    private ArrayList<Role> roleList = new ArrayList<>();
 
     public User(String username, String email, String password, ArrayList<Role> roleList){
         this.username = username;
