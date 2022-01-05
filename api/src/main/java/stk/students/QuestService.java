@@ -25,9 +25,9 @@ public interface QuestService extends Remote {
 
     boolean userHasRole(User user, String roleName) throws RemoteException;
 
-    void assignUserToRole(String username, String rolename) throws RemoteException;
+    boolean assignUserToRole(String username, String rolename) throws RemoteException;
 
-    void removeUserFromRole(String username, String rolename) throws RemoteException;
+    boolean removeUserFromRole(String username, String rolename) throws RemoteException;
 
     Map<String, User> getUsers() throws RemoteException;
 

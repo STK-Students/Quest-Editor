@@ -52,6 +52,7 @@ assignroleoptions:
     answers:
       - "Hinzufügen"
       - "Entfernen"
+      - "Abbrechen"
     error: "Ungültige Option"
 assignroleuserhierachy:
     message: "Im folgenden werden alle vorhanden Nutzer inklusive deren Rollen ausgegeben. Bitte wähle einen Nutzer aus."

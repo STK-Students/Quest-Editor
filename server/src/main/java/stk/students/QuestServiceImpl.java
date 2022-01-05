@@ -113,28 +113,32 @@ public class QuestServiceImpl implements QuestService {
         return false;
     }
 
-    public void assignUserToRole(String username, String rolename) {
+    public boolean assignUserToRole(String username, String rolename) {
         User user = users.get(username);
         Role role = roles.get(rolename);
         try {
             db.assignRoleToUser(users.get(username), roles.get(rolename));
             user.addRole(role);
             role.addUser(user);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    public void removeUserFromRole(String username, String rolename) {
+    public boolean removeUserFromRole(String username, String rolename) {
         User user = users.get(username);
         Role role = roles.get(rolename);
         try {
             db.removeRoleFromUser(user, role);
             user.removeRole(role);
             role.removeUser(user);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public boolean userHasRole(User user, String roleName) {
