@@ -6,7 +6,6 @@ import stk.students.Color;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Role implements Serializable {
 
