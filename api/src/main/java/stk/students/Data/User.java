@@ -1,4 +1,4 @@
-package stk.students.Data;
+package stk.students.data;
 
 import lombok.Getter;
 import lombok.Setter;
