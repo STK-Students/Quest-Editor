@@ -13,17 +13,16 @@ intro:
     - "Anmelden"
   error: "Ungültige Option."
 
-onboarding:
-  email:
-    message: "Wie lautet deine Email-Adresse?"
-    error: "Diese Email ist schon einem Account zugeordnet."
-  username:
-    message: "Wie heißt du?"
-    error: "Dieser Nutzername ist schon vergeben, überleg dir etwas anderes."
-  password:
-    message: "Wie soll dein Passwort lauten?"
-  done:
-    message: "Willkommen an Bord!"
+onboardingemail:
+  message: "Wie lautet deine Email-Adresse?"
+  error: "Diese Email ist schon einem Account zugeordnet."
+onboardingusername:
+  message: "Wie heißt du?"
+  error: "Dieser Nutzername ist schon vergeben, überleg dir etwas anderes."
+onboardingpassword:
+  message: "Wie soll dein Passwort lauten?"
+onboardingdone:
+  message: "Willkommen an Bord!"
 
 
 loginusername:

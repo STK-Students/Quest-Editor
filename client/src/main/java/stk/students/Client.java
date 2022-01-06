@@ -74,9 +74,9 @@ public class Client {
     }
 
     private static boolean register() throws RemoteException {
-        DynamicAnswerWindow emailWindow = new DynamicAnswerWindow("onboarding.email");
-        DynamicAnswerWindow usernameWindow = new DynamicAnswerWindow("onboarding.username");
-        DynamicAnswerWindow passwordWindow = new DynamicAnswerWindow("onboarding.password");
+        DynamicAnswerWindow emailWindow = new DynamicAnswerWindow("onboardingemail");
+        DynamicAnswerWindow usernameWindow = new DynamicAnswerWindow("onboardingusername");
+        DynamicAnswerWindow passwordWindow = new DynamicAnswerWindow("onboardingpassword");
 
 
         String email = emailWindow.getUserAnswer();
