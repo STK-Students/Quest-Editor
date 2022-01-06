@@ -1,7 +1,9 @@
-package stk.students;
+package stk.students.utils;
 
 
-import static stk.students.Color.RESET;
+import stk.students.utils.Color;
+
+import static stk.students.utils.Color.RESET;
 
 public class ColorUtil {
 

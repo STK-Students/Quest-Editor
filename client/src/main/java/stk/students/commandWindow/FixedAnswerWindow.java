@@ -1,13 +1,12 @@
 package stk.students.commandWindow;
 
-import stk.students.Color;
-import stk.students.ColorUtil;
-import stk.students.Data.Prefix;
+import stk.students.utils.Color;
+import stk.students.utils.ColorUtil;
 
 import java.util.List;
 import java.util.Locale;
 
-import static stk.students.Client.config;
+import static stk.students.utils.PrintUtils.print;
 
 public class FixedAnswerWindow extends BaseWindow {
 
@@ -30,8 +29,8 @@ public class FixedAnswerWindow extends BaseWindow {
     @Override
     public void printMessage(Color... colors) {
         super.printMessage(colors);
-        System.out.println( Prefix.OUTPUT_PREFIX + config.getMessage("possible_answer"));
-        System.out.println( Prefix.OUTPUT_PREFIX + ColorUtil.colorize(validAnswers.toString(), Color.UNDERLINE, Color.GREEN));
+        print(config.getMessage("prefix.output") + config.getMessage("possible_answer"));
+        print(config.getMessage("prefix.output") + ColorUtil.colorize(validAnswers.toString(), Color.UNDERLINE, Color.GREEN));
     }
 
     @Override

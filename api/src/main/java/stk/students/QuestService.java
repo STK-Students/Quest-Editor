@@ -2,18 +2,18 @@ package stk.students;
 
 import stk.students.Data.Role;
 import stk.students.Data.User;
+import stk.students.utils.Color;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public interface QuestService extends Remote {
 
     User loginUser(String username, String password) throws RemoteException;
 
-    boolean registerUser(String username, String email, String password) throws RemoteException;
+    User registerUser(String username, String email, String password) throws RemoteException;
 
     void disconnectUser(User user) throws RemoteException;
 
@@ -35,7 +35,7 @@ public interface QuestService extends Remote {
 
     Map<String, Role> getRoles() throws RemoteException;
 
-    Map<String, User> getActiveUsers() throws RemoteException;
+    Map<String, User> getLoggedInUsers() throws RemoteException;
 
     ArrayList<Role> getRolesFromUser(String username) throws RemoteException;
 }

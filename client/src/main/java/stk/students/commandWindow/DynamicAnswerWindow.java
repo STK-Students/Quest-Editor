@@ -1,6 +1,6 @@
 package stk.students.commandWindow;
 
-import stk.students.Color;
+import stk.students.utils.Color;
 
 public class DynamicAnswerWindow extends BaseWindow {
 

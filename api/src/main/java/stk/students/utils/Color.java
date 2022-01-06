@@ -1,7 +1,7 @@
-package stk.students;
+package stk.students.utils;
 
 public enum Color {
-    //This rests all color formatting
+    //This resets all color formatting
     RESET("0"),
 
     //Normal Colours

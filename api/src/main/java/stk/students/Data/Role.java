@@ -2,7 +2,7 @@ package stk.students.Data;
 
 import lombok.Getter;
 import lombok.Setter;
-import stk.students.Color;
+import stk.students.utils.Color;
 
 import java.io.Serializable;
 import java.util.ArrayList;

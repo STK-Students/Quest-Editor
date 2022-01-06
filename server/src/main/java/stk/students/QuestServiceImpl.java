@@ -2,19 +2,19 @@ package stk.students;
 
 import stk.students.Data.Role;
 import stk.students.Data.User;
+import stk.students.utils.Color;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class QuestServiceImpl implements QuestService {
 
     private Map<String, Role> roles;
     private Map<String, User> users;
-    private Map<String, User> activeUsers;
+    private Map<String, User> loggedInUsers;
     private Database db;
 
     public QuestServiceImpl() {
@@ -23,7 +23,7 @@ public class QuestServiceImpl implements QuestService {
             roles = db.loadRoles();
             users = db.loadUser();
             createDefaultRole();
-            activeUsers = new HashMap<>();
+            loggedInUsers = new HashMap<>();
             db.loadRelationTable();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class QuestServiceImpl implements QuestService {
     public User loginUser(String username, String password) {
         for (User user : users.values()) {
             if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equals(password)) {
-                activeUsers.put(user.getUsername(), user);
+                loggedInUsers.put(user.getUsername(), user);
                 return user;
             }
         }
@@ -62,12 +62,12 @@ public class QuestServiceImpl implements QuestService {
     }
 
     public void disconnectUser(User user) {
-        activeUsers.remove(user.getUsername());
+        loggedInUsers.remove(user.getUsername());
     }
 
-    public boolean registerUser(String username, String email, String password) {
+    public User registerUser(String username, String email, String password) {
         if (userAlreadyExists(username)) {
-            return false;
+            return null;
         }
         User user = new User(email, username, password);
         try {
@@ -77,12 +77,11 @@ public class QuestServiceImpl implements QuestService {
             if (users.size() == 1) {
                 db.assignRoleToUser(user, roles.get("Administrator"));
             }
-            loginUser(user.getEmail(), user.getPassword());
-            return true;
+            return loginUser(user.getEmail(), user.getPassword());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     public boolean createRole(String name, Color color) {
@@ -154,7 +153,7 @@ public class QuestServiceImpl implements QuestService {
     }
     public Map<String, User> getUsers(){ return users; }
     public Map<String, Role> getRoles(){ return roles; }
-    public Map<String, User> getActiveUsers(){ return activeUsers; }
+    public Map<String, User> getLoggedInUsers(){ return loggedInUsers; }
 
     public ArrayList<Role> getRolesFromUser(String username) throws RemoteException {
         User user = users.get(username);

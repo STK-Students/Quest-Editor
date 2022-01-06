@@ -1,26 +1,28 @@
 package stk.students.commandWindow;
 
-import lombok.Getter;
-import stk.students.Color;
-import stk.students.ColorUtil;
-import stk.students.Data.Prefix;
+import stk.students.Client;
+import stk.students.utils.Color;
+import stk.students.utils.ColorUtil;
+import stk.students.ConfigManager;
+import stk.students.utils.PrintUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-import static stk.students.Client.config;
+import static stk.students.utils.PrintUtils.print;
 
 public abstract class BaseWindow {
 
-    Map instruction;
-    String message;
-
-    private String userAnswer;
+    protected final ConfigManager config = Client.getInstance().getConfig();
+    protected Map instruction;
+    protected String message;
+    ;
+    String userAnswer;
 
     public BaseWindow(String configKey, Color... colors) {
-        instruction = (Map) config.getConfigData().get(configKey);
+        instruction = (Map) config.get(configKey);
         parseInstruction(configKey);
         printMessage(colors);
         readUserAnswer();
@@ -31,13 +33,13 @@ public abstract class BaseWindow {
     }
 
     public void printMessage(Color... colors) {
-        System.out.println( Prefix.OUTPUT_PREFIX + ColorUtil.colorize(message, colors));
+        print(config.getMessage("prefix.output")+ ColorUtil.colorize(message, colors));
     }
 
     public void readUserAnswer() {
         Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
-        System.out.print(Prefix.INPUT_PREFIX);
-        userAnswer = scanner.nextLine();
+        System.out.print(config.getMessage("prefix.input"));
+        userAnswer = scanner.nextLine().trim();
     }
 
     public String getUserAnswer() {
