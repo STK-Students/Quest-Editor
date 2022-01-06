@@ -13,6 +13,7 @@ public class FixedAnswerWindow extends BaseWindow {
     private List<String> validAnswers;
     private List<String> lowercaseAnswers;
     private String errorMessage;
+    final String outputPrefix = "[Output]: ";
 
     public FixedAnswerWindow(final String configKey, Color... colors) {
         super(configKey, colors);
@@ -29,8 +30,8 @@ public class FixedAnswerWindow extends BaseWindow {
     @Override
     public void printMessage(Color... colors) {
         super.printMessage(colors);
-        System.out.println(config.getMessage("possible_answer"));
-        System.out.println(ColorUtil.colorize(validAnswers.toString(), Color.UNDERLINE, Color.GREEN));
+        System.out.println( outputPrefix + config.getMessage("possible_answer"));
+        System.out.println( outputPrefix + ColorUtil.colorize(validAnswers.toString(), Color.UNDERLINE, Color.GREEN));
     }
 
     @Override

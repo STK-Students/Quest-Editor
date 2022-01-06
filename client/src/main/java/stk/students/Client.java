@@ -11,10 +11,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Hello world!
@@ -142,7 +139,7 @@ public class Client {
         DynamicAnswerWindow roleColorWindow = new DynamicAnswerWindow("createrolecolor");
         String roleName = roleNameWindow.getUserAnswer();
         String roleColor = roleColorWindow.getUserAnswer();
-        boolean success = remote.createRole(roleName, Color.valueOf(roleColor));
+        boolean success = remote.createRole(roleName, Color.valueOf(roleColor.toUpperCase(Locale.ROOT)));
         if (success) {
             System.out.println("Operation erfolgreich");
             return true;

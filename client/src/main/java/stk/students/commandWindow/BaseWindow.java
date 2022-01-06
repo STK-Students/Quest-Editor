@@ -17,6 +17,7 @@ public abstract class BaseWindow {
     String message;
 
     private String userAnswer;
+    final String outputPrefix = "[Output]: ";
 
     public BaseWindow(String configKey, Color... colors) {
         instruction = (Map) config.getConfigData().get(configKey);
@@ -30,11 +31,12 @@ public abstract class BaseWindow {
     }
 
     public void printMessage(Color... colors) {
-        System.out.println(ColorUtil.colorize(message, colors));
+        System.out.println( outputPrefix + ColorUtil.colorize(message, colors));
     }
 
     public void readUserAnswer() {
         Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+        System.out.print("[Input]: ");
         userAnswer = scanner.nextLine();
     }
 
