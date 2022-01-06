@@ -2,6 +2,7 @@ package stk.students;
 
 import lombok.Getter;
 import lombok.Setter;
+import stk.students.Data.Prefix;
 import stk.students.Data.Role;
 import stk.students.Data.User;
 import stk.students.commandWindow.DynamicAnswerWindow;
@@ -48,7 +49,8 @@ public class Client {
                 System.out.println(config.getMessage("intro.error"));
             }
         }
-        showWelcomeMessage();
+        System.out.println(Prefix.OUTPUT_PREFIX + "Login/Registrierung erfolgreich!");
+
         boolean successUserAuth = showActiveUser();
         if (successUserAuth) {
             roleAdministration();
@@ -83,14 +85,9 @@ public class Client {
         return remote.registerUser(username, email, password);
     }
 
-    private static void showWelcomeMessage() throws RemoteException {
-        System.out.println(config.getMessage("onboarding.done.message"));
-    }
-
     private static boolean showActiveUser() throws RemoteException {
-        System.out.println(config.getMessage("overview.message"));
         Map<String, User> activeUser = remote.getActiveUsers();
-        System.out.println("Aktive Benutzer");
+        System.out.println(Prefix.OUTPUT_PREFIX + "Aktive Benutzer");
         for (User user : activeUser.values()) {
             printUser(user);
         }
