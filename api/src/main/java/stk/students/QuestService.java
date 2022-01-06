@@ -1,7 +1,7 @@
 package stk.students;
 
-import stk.students.Data.Role;
-import stk.students.Data.User;
+import stk.students.data.Role;
+import stk.students.data.User;
 import stk.students.utils.Color;
 
 import java.rmi.Remote;

@@ -2,7 +2,7 @@ package stk.students;
 
 import lombok.Getter;
 import lombok.Setter;
-import stk.students.Data.User;
+import stk.students.data.User;
 import stk.students.interaction.LoginProcess;
 
 import java.net.MalformedURLException;

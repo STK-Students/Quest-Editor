@@ -22,7 +22,9 @@ public class FixedAnswerWindow extends BaseWindow {
     public void parseInstruction(final String configKey) {
         super.parseInstruction(configKey);
         validAnswers = (List<String>) instruction.get("answers");
-        lowercaseAnswers = validAnswers.stream().map((entry) -> entry.toLowerCase(Locale.ROOT)).toList();
+        if (validAnswers != null) {
+            lowercaseAnswers = validAnswers.stream().map(String::toLowerCase).toList();
+        }
         errorMessage = (String) instruction.get("error");
     }
 
@@ -40,6 +42,16 @@ public class FixedAnswerWindow extends BaseWindow {
             System.out.println(ColorUtil.colorize(errorMessage, Color.RED, Color.BLINK));
             readUserAnswer();
         }
+    }
+
+    /**
+     * Adds more valid answers.
+     * This is useful for answers that can only be determined during runtime.
+     *
+     * @param answers a list of answers to add
+     */
+    public void addValidAnswers(List<String> answers) {
+        validAnswers.addAll(answers.stream().map(String::toLowerCase).toList());
     }
 
 }

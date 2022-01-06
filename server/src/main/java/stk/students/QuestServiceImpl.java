@@ -1,7 +1,7 @@
 package stk.students;
 
-import stk.students.Data.Role;
-import stk.students.Data.User;
+import stk.students.data.Role;
+import stk.students.data.User;
 import stk.students.utils.Color;
 
 import java.rmi.RemoteException;
@@ -157,10 +157,6 @@ public class QuestServiceImpl implements QuestService {
 
     public ArrayList<Role> getRolesFromUser(String username) throws RemoteException {
         User user = users.get(username);
-        ArrayList<Role> rolelist = new ArrayList<Role>();
-        for (Role role : user.getRoleList()){
-            rolelist.add(role);
-        }
-        return rolelist;
+        return new ArrayList<>(user.getRoleList());
     }
 }

@@ -3,19 +3,22 @@ package stk.students.interaction;
 import stk.students.Client;
 import stk.students.utils.Color;
 import stk.students.ConfigManager;
-import stk.students.Data.User;
+import stk.students.data.User;
 import stk.students.QuestService;
 import stk.students.commandWindow.DynamicAnswerWindow;
 import stk.students.commandWindow.FixedAnswerWindow;
+import stk.students.utils.ColorUtil;
 
 import java.rmi.RemoteException;
 
 import static stk.students.utils.PrintUtils.print;
+import static stk.students.utils.PrintUtils.printFromConfig;
 import static stk.students.utils.PrintUtils.printUser;
 
 public class LoginProcess {
 
     private final ConfigManager config = Client.getInstance().getConfig();
+    private final String IN_PREFIX = config.getMessage("prefix.input");
     private final QuestService server = Client.getInstance().getServer();
 
     public LoginProcess() throws RemoteException {
@@ -36,7 +39,7 @@ public class LoginProcess {
             }
         }
         Client.getInstance().setCurrentUser(user);
-        print(config.getMessage("prefix.input") + "Login/Registrierung erfolgreich!");
+        printFromConfig("login.success", Color.GREEN);
 
         showLoggedInUsers();
         if (server.userHasRole(user, "Administrator")) {
@@ -65,7 +68,7 @@ public class LoginProcess {
     }
 
     private void showLoggedInUsers() throws RemoteException {
-        print(config.getMessage("prefix.input") + "Aktive Benutzer");
+        printFromConfig("overview");
         for (User user : server.getLoggedInUsers().values()) {
             printUser(user);
         }

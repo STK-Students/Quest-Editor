@@ -3,8 +3,9 @@
 #
 possible_answer: "Antwortmöglichkeiten:"
 prefix:
-  output: "[Output]: "
-  input:  "[Input]: "
+  output: ""
+  input:  "-> "
+error: "Ein Fehler ist aufgetreten."
 
 #
 # Login- und Registrierungsprozess
@@ -36,9 +37,9 @@ login:
   password:
     message: "Wie lautet dein Passwort?"
     error: "Falsches Passwort oder ungültiger Nutzername!"
+  success: "Login erfolgreich!"
 
-overview:
-  message: "Aktuell eingeloggte Nutzer:"
+overview: "Aktuell eingeloggte Nutzer:"
 
 adminOptions:
   message: "Du kannst als Admin auf die Nutzer-Verwaltung zugreifen."
@@ -50,36 +51,37 @@ adminOptions:
   error: "Ungültige Option."
 
 role:
-  #
+
   # Rollen-Verwaltung
-  #
   options:
+    message: "Es können nun die Rollen eines Nutzer modifiziert werden:"
     answers:
     - "Hinzufügen"
     - "Entfernen"
     - "Abbrechen"
     error: "Ungültige Option"
   userSelect:
-    message: "Geben Sie den username aus der zuvor erschienenen Liste ein um einen Benutzer auszuwählen."
+    message: "Geben Sie den Nutzernamen aus der zuvor erschienenen Liste ein um einen Benutzer auszuwählen."
     error: "Dieser Benutzer existiert nicht."
   roleSelect:
     message: "Geben Sie den Rollennamen aus der zuvor erschienenen Liste ein um eine Rolle auszuwählen."
     error: "Die ausgewählte Rolle existiert nicht."
-  remove:
-    message: "Die Rolle wurde dem Nutzer entfernt."
-    error: "Die Rolle wurde dem Nutzer hinzugefügt."
-  #
-  # Rollen-Erstellung und Anzeige
-  #
-  create:
-    message: "Die Rolle wurde mit der gewünschten Farbe erstellt."
-    error: "Es konnte keine Rolle erstellt werden"
+  actions:
+    addSuccess: "Die Rolle wurde dem Nutzer entfernt."
+    removeSuccess: "Die Rolle wurde dem Nutzer hinzugefügt."
+
+  # Rollen-Erstellung
   name:
     message: "Wie lautet der Name der neuen Rolle?"
     error: "Dieser Name ist bereits vergeben."
   color:
     message: "Wie soll die Farbe der neuen Rolle sein?"
     error: "Diese Farbe existiert nicht"
+  createDone:
+    message: "Die Rolle wurde mit der gewünschten Farbe erstellt."
+    error: "Es konnte keine Rolle erstellt werden"
+
+  # Rollen-Anzeige
   show:
     message: "Geben Sie den Benutzer ein, von dem Sie die Rollen angezeigt bekommen möchten."
     error: "Falscher Benutzer"

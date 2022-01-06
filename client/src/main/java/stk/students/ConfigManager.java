@@ -26,7 +26,7 @@ public class ConfigManager {
     }
 
     /**
-     * Gets a string message from the config.
+     * Gets a white message from the config.
      * You can only use this on method on config keys that hold a string.
      *
      * @param configKey the config key

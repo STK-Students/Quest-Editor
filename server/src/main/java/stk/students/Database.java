@@ -2,8 +2,8 @@ package stk.students;
 
 import lombok.Getter;
 import lombok.Setter;
-import stk.students.Data.Role;
-import stk.students.Data.User;
+import stk.students.data.Role;
+import stk.students.data.User;
 import stk.students.utils.Color;
 
 import java.sql.Connection;

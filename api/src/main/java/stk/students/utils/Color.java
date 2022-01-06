@@ -41,8 +41,8 @@ public enum Color {
     }
 
     /**
-     * Builds an ASCII color
-     * @return
+     * Builds an ASCII color code
+     * @return a valid ASCII color code
      */
     public String getColorCode() {
         return "\033[" + colorCode + "m";
