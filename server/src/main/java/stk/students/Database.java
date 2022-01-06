@@ -96,8 +96,8 @@ public class Database {
     public void assignRoleToUser(User user, Role role) throws SQLException {
         String query = "Insert into public.assigned_to Values(?,?)";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
-        preparedStatement.setString(1, user.getEmail());
-        preparedStatement.setString(2, role.getName());
+        preparedStatement.setString(1, role.getName());
+        preparedStatement.setString(2, user.getUsername());
         preparedStatement.execute();
     }
     public void removeRoleFromUser(User user, Role role) throws SQLException {

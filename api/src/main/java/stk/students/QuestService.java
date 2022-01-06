@@ -5,6 +5,8 @@ import stk.students.Data.User;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface QuestService extends Remote {
@@ -34,4 +36,6 @@ public interface QuestService extends Remote {
     Map<String, Role> getRoles() throws RemoteException;
 
     Map<String, User> getActiveUsers() throws RemoteException;
+
+    ArrayList<Role> getRolesFromUser(String username) throws RemoteException;
 }

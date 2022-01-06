@@ -11,6 +11,9 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -90,6 +93,7 @@ public class Client {
     private static boolean showActiveUser() throws RemoteException {
         System.out.println(config.getMessage("overview.message"));
         Map<String, User> activeUser = remote.getActiveUsers();
+        System.out.println("Aktive Benutzer");
         for (User user : activeUser.values()) {
             printUser(user);
         }
@@ -117,26 +121,30 @@ public class Client {
     }
 
     private static void roleAdministration() throws RemoteException {
-        FixedAnswerWindow roleAdministrationWindow = new FixedAnswerWindow("adminOptions", Color.BLUE);
         while(true){
+            FixedAnswerWindow roleAdministrationWindow = new FixedAnswerWindow("adminOptions", Color.BLUE);
             if ("Rolle zuweisen".equalsIgnoreCase(roleAdministrationWindow.getUserAnswer())) {
                 addOrRemoveAssignmentRole();
             } else if ("Rolle erstellen".equalsIgnoreCase(roleAdministrationWindow.getUserAnswer())) {
                 createRole();
+            } else if("Rollen anzeigen".equalsIgnoreCase(roleAdministrationWindow.getUserAnswer())) {
+                showRolesFromUser();
             } else if ("Programm beenden".equalsIgnoreCase(roleAdministrationWindow.getUserAnswer())) {
                 remote.disconnectUser(currentUser);
+                break;
             }else{
                 System.out.println(config.getMessage("assignroleoptions.error"));
             }
         }
     }
     private static boolean createRole() throws RemoteException {
-        DynamicAnswerWindow roleNameWindow = new DynamicAnswerWindow("createrole.name");
-        DynamicAnswerWindow roleColorWindow = new DynamicAnswerWindow("createrole.color");
+        DynamicAnswerWindow roleNameWindow = new DynamicAnswerWindow("createrolename");
+        DynamicAnswerWindow roleColorWindow = new DynamicAnswerWindow("createrolecolor");
         String roleName = roleNameWindow.getUserAnswer();
         String roleColor = roleColorWindow.getUserAnswer();
         boolean success = remote.createRole(roleName, Color.valueOf(roleColor));
         if (success) {
+            System.out.println("Operation erfolgreich");
             return true;
         } else {
             System.out.println(config.getMessage("createrole.error"));
@@ -147,32 +155,50 @@ public class Client {
     private static boolean addOrRemoveAssignmentRole() throws RemoteException {
         Map<String, User> users = remote.getUsers();
         Map<String, Role> roles = remote.getRoles();
-        FixedAnswerWindow optionsRole = new FixedAnswerWindow("assignroleoptions", Color.BLUE);
-        DynamicAnswerWindow userWindow = new DynamicAnswerWindow("assignroleuserhierachy");
+        FixedAnswerWindow optionsWindow = new FixedAnswerWindow("assignroleoptions", Color.BLUE);
         for (User user : users.values()) {
             printUser(user);
         }
-        DynamicAnswerWindow roleWindow = new DynamicAnswerWindow("assignroleuserroleoverview");
+        DynamicAnswerWindow userWindow = new DynamicAnswerWindow("assignroleuserhierachy");
         for (Role role : roles.values()) {
             printRole(role);
         }
-        FixedAnswerWindow optionsWindow = new FixedAnswerWindow("assignroleoptions", Color.BLUE);
+        DynamicAnswerWindow roleWindow = new DynamicAnswerWindow("assignroleuserroleoverview");
         String username = userWindow.getUserAnswer();
         String rolename = roleWindow.getUserAnswer();
-        String options = optionsWindow.getUserAnswer();
+        String option = optionsWindow.getUserAnswer();
+        System.out.println(username);
+        System.out.println(rolename);
         boolean success = false;
-        while (success == false) {
-            if (options.equalsIgnoreCase("Hinzufügen")) {
+        while (true) {
+            if (option.equalsIgnoreCase("Hinzufügen")) {
                 success = remote.assignUserToRole(username, rolename);
-            } else if (options.equalsIgnoreCase("Entfernen")) {
+                System.out.println(success);
+                break;
+            } else if (option.equalsIgnoreCase("Entfernen")) {
                 success = remote.removeUserFromRole(username, rolename);
-            } else if (options.equalsIgnoreCase("Abbrechen")) {
+                System.out.println(success);
+                break;
+            } else if (option.equalsIgnoreCase("Abbrechen")) {
                 break;
             } else {
                 System.out.println(config.getMessage("assignroleoptions.error"));
             }
         }
+        if (success){
+            System.out.println("Operation erfolgreich");
+        }
         return success;
+    }
+    public static boolean showRolesFromUser() throws RemoteException{
+        ArrayList<Role> rolesFromUser;
+        DynamicAnswerWindow usernameWindow = new DynamicAnswerWindow("showrolesfromuser");
+        String username = usernameWindow.getUserAnswer();
+        rolesFromUser = remote.getRolesFromUser(username);
+        for(Role role : rolesFromUser){
+            printRole(role);
+        }
+        return true;
     }
 
 }

@@ -3,8 +3,11 @@ package stk.students;
 import stk.students.Data.Role;
 import stk.students.Data.User;
 
+import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestServiceImpl implements QuestService {
@@ -152,4 +155,13 @@ public class QuestServiceImpl implements QuestService {
     public Map<String, User> getUsers(){ return users; }
     public Map<String, Role> getRoles(){ return roles; }
     public Map<String, User> getActiveUsers(){ return activeUsers; }
+
+    public ArrayList<Role> getRolesFromUser(String username) throws RemoteException {
+        User user = users.get(username);
+        ArrayList<Role> rolelist = new ArrayList<Role>();
+        for (Role role : user.getRoleList()){
+            rolelist.add(role);
+        }
+        return rolelist;
+    }
 }

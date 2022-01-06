@@ -41,6 +41,7 @@ adminOptions:
   answers:
     - "Rolle zuweisen"
     - "Rolle erstellen"
+    - "Rollen anzeigen"
     - "Programm beenden"
   error: "Ungültige Option."
 
@@ -55,10 +56,10 @@ assignroleoptions:
       - "Abbrechen"
     error: "Ungültige Option"
 assignroleuserhierachy:
-    message: "Im folgenden werden alle vorhanden Nutzer inklusive deren Rollen ausgegeben. Bitte wähle einen Nutzer aus."
-    error: "Dieser Nutzer existiert nicht."
+    message: "Geben Sie den username aus der zuvor erschienenen Liste ein um einen Benutzer auszuwählen."
+    error: "Dieser Benutzer existiert nicht."
 assignroleuserroleoverview:
-    message: "Alle verfügbaren Rollen werden ausgeben. Wähle eine Rolle aus um sie dem Nutzer zu geben oder zu entfernen."
+    message: "Geben Sie den Rollennamen aus der zuvor erschienenen Liste ein um eine Rolle auszuwählen."
     error: "Die ausgewählte Rolle existiert nicht."
 assignroleuserrole:
     message: "Die Rolle wurde dem Nutzer entfernt."
@@ -77,3 +78,9 @@ createrolecolor:
   message: "Wie soll die Farbe der neuen Rolle sein?"
   error: "Diese Farbe existiert nicht"
 
+#
+# Rollen-Anzeigen
+#
+showrolesfromuser:
+  message: "Geben Sie den Benutzer ein, von dem Sie die Rollen angezeigt bekommen möchten."
+  error: "Falscher Benutzer"
