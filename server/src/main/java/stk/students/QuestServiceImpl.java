@@ -15,16 +15,16 @@ public class QuestServiceImpl implements QuestService {
     private Map<String, Role> roles;
     private Map<String, User> users;
     private Map<String, User> loggedInUsers;
-    private Database db;
+    private Database database;
 
     public QuestServiceImpl() {
         try {
-            db = new Database();
-            roles = db.loadRoles();
-            users = db.loadUser();
+            database = new Database();
+            roles = database.loadRoles();
+            users = database.loadUser();
             createDefaultRole();
             loggedInUsers = new HashMap<>();
-            db.loadRelationTable();
+            database.loadRelationTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class QuestServiceImpl implements QuestService {
         }
         if (!temp) {
             try {
-                db.saveRole(adminRole);
+                database.saveRole(adminRole);
                 roles.put(adminRole.getName(), adminRole);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -71,11 +71,11 @@ public class QuestServiceImpl implements QuestService {
         }
         User user = new User(email, username, password);
         try {
-            db = new Database();
-            db.saveUser(user);
+            database = new Database();
+            database.saveUser(user);
             users.put(user.getUsername(), user);
             if (users.size() == 1) {
-                db.assignRoleToUser(user, roles.get("Administrator"));
+                database.assignRoleToUser(user, roles.get("Administrator"));
             }
             return loginUser(user.getEmail(), user.getPassword());
         } catch (SQLException e) {
@@ -87,8 +87,8 @@ public class QuestServiceImpl implements QuestService {
     public boolean createRole(String name, Color color) {
         Role role = new Role(name, color);
         try {
-            db = new Database();
-            db.saveRole(role);
+            database = new Database();
+            database.saveRole(role);
             roles.put(role.getName(), role);
             return true;
         } catch (SQLException e) {
@@ -115,11 +115,11 @@ public class QuestServiceImpl implements QuestService {
         return false;
     }
 
-    public boolean assignUserToRole(String username, String rolename) {
+    public boolean assignRole(String username, String rolename) {
         User user = users.get(username);
         Role role = roles.get(rolename);
         try {
-            db.assignRoleToUser(users.get(username), roles.get(rolename));
+            database.assignRoleToUser(user, role);
             user.addRole(role);
             role.addUser(user);
             return true;
@@ -133,7 +133,7 @@ public class QuestServiceImpl implements QuestService {
         User user = users.get(username);
         Role role = roles.get(rolename);
         try {
-            db.removeRoleFromUser(user, role);
+            database.removeRoleFromUser(user, role);
             user.removeRole(role);
             role.removeUser(user);
             return true;
