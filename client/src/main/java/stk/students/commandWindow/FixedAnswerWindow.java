@@ -14,7 +14,6 @@ import java.util.Scanner;
 import static stk.students.utils.PrintUtils.print;
 import static stk.students.utils.PrintUtils.printFromConfig;
 import static stk.students.utils.PrintUtils.println;
-import static stk.students.utils.PrintUtils.printlnFromConfig;
 
 public class FixedAnswerWindow {
     private final ConfigManager config = Client.getInstance().getConfig();
@@ -40,8 +39,9 @@ public class FixedAnswerWindow {
      * Params:
      * configKey – path to the instruction in a resource file
      * colors – determines the color of the message
+     *
      * @param configKey path to a config section with a relevant instruction
-     * @param colors determines the color of the message
+     * @param colors    determines the color of the message
      */
     public FixedAnswerWindow(final String configKey, Color... colors) {
         parseInstruction(configKey);
@@ -87,7 +87,7 @@ public class FixedAnswerWindow {
         printFromConfig("prefix.input", Color.WHITE);
         String userAnswer = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
 
-        if (!validAnswers.contains(userAnswer)) {
+        if (!validAnswers.contains(userAnswer) && !validAnswers.isEmpty()) {
             println(errorMessage, Color.RED, Color.BLINK);
             readUserAnswer();
         }
