@@ -69,7 +69,7 @@ public class QuestServiceImpl implements QuestService {
         if (userAlreadyExists(username)) {
             return null;
         }
-        User user = new User(email, username, password);
+        User user = new User(username, email, password);
         try {
             database = new Database();
             database.saveUser(user);
@@ -77,7 +77,7 @@ public class QuestServiceImpl implements QuestService {
             if (users.size() == 1) {
                 database.assignRoleToUser(user, roles.get("Administrator"));
             }
-            return loginUser(user.getEmail(), user.getPassword());
+            return loginUser(user.getUsername(), user.getPassword());
         } catch (SQLException e) {
             e.printStackTrace();
         }
