@@ -85,3 +85,4 @@ role:
     message: "Geben Sie den Benutzer ein, von dem Sie die Rollen angezeigt bekommen möchten."
     error: "Falscher Benutzer"
     result: "Der Nutzer hat folgende Rollen: "
+    no-roles: "Keine Rollen..."
