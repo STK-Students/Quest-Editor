@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static stk.students.utils.PrintUtils.print;
+import static stk.students.utils.PrintUtils.printFromConfig;
 
 public class AdminGUI {
 
@@ -29,10 +30,10 @@ public class AdminGUI {
 
     private void showAdminOptions() throws RemoteException {
         while (true) {
-            FixedAnswerWindow roleAdministrationWindow = new FixedAnswerWindow("adminOptions", Color.BLUE);
+            FixedAnswerWindow roleAdministrationWindow = new FixedAnswerWindow("adminOptions", Color.CYAN);
             String selectedOption = roleAdministrationWindow.getUserAnswer();
             if ("nutzer verwalten".equals(selectedOption)) {
-                addOrRemoveAssignmentRole();
+                manageRoles();
             } else if ("rolle erstellen".equals(selectedOption)) {
                 createRole();
             } else if ("rollen anzeigen".equals(selectedOption)) {
@@ -63,54 +64,57 @@ public class AdminGUI {
         }
     }
 
-    private void addOrRemoveAssignmentRole() throws RemoteException {
+    private void manageRoles() throws RemoteException {
         Map<String, User> users = server.getUsers();
         Map<String, Role> roles = server.getRoles();
         FixedAnswerWindow optionsWindow = new FixedAnswerWindow("role.options", Color.BLUE);
         String option = optionsWindow.getUserAnswer();
-        if (option.equalsIgnoreCase("abbrechen")) {
-            return;
-        }
-
-        FixedAnswerWindow userWindow = new FixedAnswerWindow("role.userSelect");
-        List<String> userNames = users.values().stream().map(User::getUsername).toList();
-        userWindow.addValidAnswers(userNames);
-        String username = userWindow.getUserAnswer();
-
-        FixedAnswerWindow roleWindow = new FixedAnswerWindow("role.roleSelect");
-        List<String> roleNames = roles.values().stream().map(Role::getName).toList();
-        roleWindow.addValidAnswers(roleNames);
-        String roleName = roleWindow.getUserAnswer();
-
 
         boolean success = false;
 
-        switch (option) {
-            case "hinzufügen" -> {
-                success = server.assignRole(username, roleName);
-                if (success) {
-                    PrintUtils.printlnFromConfig("role.actions.addSuccess");
-                }
+        if (option.equalsIgnoreCase("abbrechen")) {
+            return;
+        } else if (option.equalsIgnoreCase("entfernen")) {
+            String username = showRolesFromUser();
+
+            FixedAnswerWindow roleWindow = new FixedAnswerWindow("role.roleSelect");
+            List<String> roleNames = users.get(username).getRoleList().stream().map(Role::getName).toList();
+            roleWindow.addValidAnswers(roleNames);
+            String roleName = roleWindow.getUserAnswer();
+
+            success = server.removeUserFromRole(username, roleName);
+            if (success) {
+                PrintUtils.printlnFromConfig("role.actions.removeSuccess");
             }
-            case "entfernen" -> {
-                success = server.removeUserFromRole(username, roleName);
-                if (success) {
-                    PrintUtils.printlnFromConfig("role.actions.removeSuccess");
-                }
+        } else if (option.equalsIgnoreCase("hinzufügen")){
+            FixedAnswerWindow userWindow = new FixedAnswerWindow("role.userSelect");
+            List<String> userNames = users.values().stream().map(User::getUsername).toList();
+            userWindow.addValidAnswers(userNames);
+            String username = userWindow.getUserAnswer();
+
+            FixedAnswerWindow roleWindow = new FixedAnswerWindow("role.roleSelect");
+            List<String> roleNames = roles.values().stream().map(Role::getName).toList();
+            roleWindow.addValidAnswers(roleNames);
+            String roleName = roleWindow.getUserAnswer();
+
+            success = server.assignRole(username, roleName);
+            if (success) {
+                PrintUtils.printlnFromConfig("role.actions.addSuccess");
             }
         }
+
         if (!success) {
             PrintUtils.printlnFromConfig("error");
         }
     }
 
-    private void showRolesFromUser() throws RemoteException {
+    private String showRolesFromUser() throws RemoteException {
         FixedAnswerWindow usernameWindow = new FixedAnswerWindow("role.show");
         Map<String, User> users = server.getUsers();
         usernameWindow.addValidAnswers(users.keySet().stream().toList());
-        String userAnswer = usernameWindow.getUserAnswer();
+        String username = usernameWindow.getUserAnswer();
 
-        List<Role> roles = server.getRolesFromUser(userAnswer);
+        List<Role> roles = server.getRolesFromUser(username);
         PrintUtils.printFromConfig("role.show.result");
         for (int i = 0; i < roles.size(); i++) {
             Role role = roles.get(i);
@@ -119,7 +123,11 @@ public class AdminGUI {
                 print(", ");
             }
         }
+        if (roles.size() == 0) {
+            printFromConfig("role.show.no-roles", Color.RED);
+        }
         print("\n");
+        return username;
     }
 
 }
