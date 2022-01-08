@@ -1,28 +1,32 @@
 package stk.students.interaction;
 
 import stk.students.Client;
-import stk.students.utils.Color;
-import stk.students.ConfigManager;
-import stk.students.data.User;
 import stk.students.QuestService;
 import stk.students.commandWindow.DynamicAnswerWindow;
 import stk.students.commandWindow.FixedAnswerWindow;
-import stk.students.utils.ColorUtil;
+import stk.students.data.User;
+import stk.students.utils.Color;
+import stk.students.utils.PrintUtils;
 
 import java.rmi.RemoteException;
 
-import static stk.students.utils.PrintUtils.print;
 import static stk.students.utils.PrintUtils.printFromConfig;
 import static stk.students.utils.PrintUtils.printUser;
+import static stk.students.utils.PrintUtils.printlnFromConfig;
 
 public class LoginProcess {
 
-    private final ConfigManager config = Client.getInstance().getConfig();
-    private final String IN_PREFIX = config.getMessage("prefix.input");
     private final QuestService server = Client.getInstance().getServer();
 
     public LoginProcess() throws RemoteException {
         showLoginAndRegisterWindow();
+
+        User currentUser = Client.getInstance().getCurrentUser();
+        if (server.userHasRole(currentUser, "Administrator")) {
+            new AdminGUI();
+        }
+
+        server.disconnectUser(Client.getInstance().getCurrentUser());
     }
 
     private void showLoginAndRegisterWindow() throws RemoteException {
@@ -30,21 +34,17 @@ public class LoginProcess {
         while (user == null) {
 
             FixedAnswerWindow intro = new FixedAnswerWindow("intro", Color.BLUE);
-            if ("anmelden".equals(intro.getUserAnswer())) {
+            String answer = intro.getUserAnswer();
+            if ("anmelden".equals(answer)) {
                 user = login();
-            } else if ("registrieren".equals(intro.getUserAnswer())) {
+            } else if ("registrieren".equals(answer)) {
                 user = register();
-            } else {
-                System.out.println(config.getMessage("intro.error"));
             }
         }
         Client.getInstance().setCurrentUser(user);
-        printFromConfig("login.success", Color.GREEN);
+        printlnFromConfig("login.success", Color.GREEN);
 
         showLoggedInUsers();
-        if (server.userHasRole(user, "Administrator")) {
-            new AdminGUI();
-        }
     }
 
     private User login() throws RemoteException {
@@ -53,7 +53,12 @@ public class LoginProcess {
 
         String username = usernameWindow.getUserAnswer();
         String password = passwordWindow.getUserAnswer();
-        return server.loginUser(username, password);
+        User user =  server.loginUser(username, password);
+        if (user == null) {
+            printFromConfig("login.error");
+            login();
+        }
+        return user;
     }
 
     private User register() throws RemoteException {
@@ -68,7 +73,7 @@ public class LoginProcess {
     }
 
     private void showLoggedInUsers() throws RemoteException {
-        printFromConfig("overview");
+        PrintUtils.printlnFromConfig("overview");
         for (User user : server.getLoggedInUsers().values()) {
             printUser(user);
         }
