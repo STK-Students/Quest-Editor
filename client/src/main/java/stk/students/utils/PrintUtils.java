@@ -8,34 +8,42 @@ import stk.students.data.User;
 public class PrintUtils {
 
     private static final ConfigManager config = Client.getInstance().getConfig();
-    final static String OUT_PREFIX = config.getMessage("prefix.output");
+    final static String OUT_PREFIX = (String) config.get("prefix.output");
 
     public static void printUser(User user) {
-        print(OUT_PREFIX +"_________________________________");
+        print("\n");
         print(OUT_PREFIX + "Username: " + user.getUsername(), Color.BLUE);
-        print(OUT_PREFIX + "E-Mail: " + user.getEmail());
+        println(OUT_PREFIX + " E-Mail: " + user.getEmail());
     }
 
     public static void printRole(Role role) {
-        print(OUT_PREFIX + "_________________________________");
-        print(OUT_PREFIX + "Name: " + role.getName(), role.getColor());
-        print(OUT_PREFIX + "Farbe: " + role.getColor());
+        print("\n");
+        println(OUT_PREFIX + "Name: " + role.getName(), role.getColor());
+        println(OUT_PREFIX + "Farbe: " + role.getColor());
     }
 
 
-    public static void printFromConfig(String configKey) {
-        print(config.getMessage(configKey));
+    public static void printlnFromConfig(String configKey) {
+        printlnFromConfig(configKey, Color.WHITE);
+    }
+
+    public static void printlnFromConfig(String configKey, Color... color) {
+        println((String) config.get(configKey), color);
     }
 
     public static void printFromConfig(String configKey, Color... color) {
-        print(config.getMessage(configKey), color);
+        print((String) config.get(configKey), color);
     }
 
-    public static void print(String message) {
-        System.out.println(ColorUtil.colorize(message, Color.WHITE));
+    public static void println(String message) {
+        println(message, Color.WHITE);
+    }
+
+    public static void println(String message, Color... color) {
+        System.out.println(ColorUtil.colorize(message, color));
     }
 
     public static void print(String message, Color... color) {
-        System.out.println(ColorUtil.colorize(message, color));
+        System.out.print(ColorUtil.colorize(message, color));
     }
 }
