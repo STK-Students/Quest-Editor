@@ -1,8 +1,6 @@
 package stk.students;
 
 import org.yaml.snakeyaml.Yaml;
-import stk.students.utils.Color;
-import stk.students.utils.ColorUtil;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -25,33 +23,8 @@ public class ConfigManager {
         configData = yaml.load(inputStream);
     }
 
-    /**
-     * Gets a white message from the config.
-     * You can only use this on method on config keys that hold a string.
-     *
-     * @param configKey the config key
-     * @return a white config value
-     */
-    public String getMessage(String configKey) {
-        return getMessage(configKey, Color.WHITE);
-    }
-
-    /**
-     * Gets a string message from the config.
-     * You can only use this on method on config keys that hold a string.
-     *
-     * @param configKey the config key
-     * @param colors    colors to apply to the string
-     * @return a colorized config value
-     */
-    public String getMessage(String configKey, Color... colors) {
-        String message;
-        try {
-            message = (String) get(configKey);
-        } catch (ClassCastException exception) {
-            throw new UnsupportedOperationException("You can only use this on method on config keys that hold a string.");
-        }
-        return ColorUtil.colorize(message, colors);
+    public String getMessage(String path) {
+        return (String) get(path);
     }
 
     /**
