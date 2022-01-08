@@ -55,8 +55,8 @@ public class LoginProcess {
         String password = passwordWindow.getUserAnswer();
         User user =  server.loginUser(username, password);
         if (user == null) {
-            printFromConfig("login.error");
-            login();
+            printlnFromConfig("login.error", Color.RED, Color.BLINK);
+            return login();
         }
         return user;
     }
