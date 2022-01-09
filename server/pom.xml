@@ -23,6 +23,7 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.3.1</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -50,8 +51,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <minimizeJar>true</minimizeJar>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
+                            <minimizeJar>false</minimizeJar>
                             <artifactSet>
                                 <includes>
                                     <include>org.postgresql</include>
