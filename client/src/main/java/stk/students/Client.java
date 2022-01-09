@@ -10,9 +10,6 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-/**
- * Main client class.
- */
 public class Client {
 
     private static final String DEFAULT_IP_ADDRESS = "45.89.127.86";

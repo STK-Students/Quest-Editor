@@ -1,5 +1,7 @@
 package stk.students;
 
+import java.net.MalformedURLException;
+import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -7,20 +9,38 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-/**
- * Hello world!
- */
 public class Server {
 
-    public static String ipAddress = "127.0.0.1";
+    public static String DEFAULT_IP = "127.0.0.1";
+    public static int DEFAULT_PORT = 1099;
+    public static String DEFAULT_SERVICE_NAME = "Quest_Service";
 
-    public static void main(String[] args) throws RemoteException, AlreadyBoundException, java.net.MalformedURLException {
-        QuestService stub = (QuestService) UnicastRemoteObject.exportObject(new QuestServiceImpl(), 1099);
+    public Server() {
+        host(DEFAULT_IP, DEFAULT_PORT, DEFAULT_SERVICE_NAME);
+    }
 
-        Registry registry = LocateRegistry.createRegistry(1099);
-        registry.bind("QuestService", stub);
+    public Server(final String ip) {
+        host(ip, DEFAULT_PORT, DEFAULT_SERVICE_NAME);
+    }
+    public Server(final String ip, final int port) {
+        host(ip, port, DEFAULT_SERVICE_NAME);
+    }
+    public Server(final String ip, final int port, final String service) {
+        host(ip, port, service);
+    }
 
-        Naming.bind("rmi://" + ipAddress + ":1099/Quest_Server", stub);
+    public void host(final String ipAddress, final int port, final String serviceName) {
+        try {
+            QuestService stub = (QuestService) UnicastRemoteObject.exportObject(new QuestServiceImpl(), port);
+
+            Registry registry = LocateRegistry.createRegistry(port);
+            registry.bind(serviceName, stub);
+
+            Naming.bind("rmi://" + ipAddress + ":" + port + "/" + serviceName, stub);
+        } catch (MalformedURLException | AlreadyBoundException | RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Serving on '" + ipAddress + ":" + port + "/" + serviceName + "'.");
     }
 }
 
