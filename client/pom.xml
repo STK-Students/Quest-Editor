@@ -33,7 +33,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>stk.students.Client</mainClass>
+              <mainClass>stk.students.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
