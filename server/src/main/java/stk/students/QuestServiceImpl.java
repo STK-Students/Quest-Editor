@@ -12,6 +12,8 @@ import java.util.Map;
 
 public class QuestServiceImpl implements QuestService {
 
+    private static final String ADMIN_ROLE_NAME = "administrator";
+
     private Map<String, Role> roles;
     private Map<String, User> users;
     private Map<String, User> loggedInUsers;
@@ -34,14 +36,10 @@ public class QuestServiceImpl implements QuestService {
      * Tries to create the default "Administrator" role.
      */
     public void createDefaultRole() {
-        Role adminRole = new Role("Administrator", Color.RED);
-        boolean temp = false;
-        for (String roleItem : roles.keySet()) {
-            if (roles.get(roleItem).getName().equalsIgnoreCase("Administrator")) {
-                temp = true;
-            }
-        }
-        if (!temp) {
+        Role adminRole = new Role(ADMIN_ROLE_NAME, Color.RED);
+        boolean alreadyExists = roles.keySet().stream().anyMatch((roleName) -> roleName.equalsIgnoreCase(ADMIN_ROLE_NAME));
+
+        if (!alreadyExists) {
             try {
                 database.saveRole(adminRole);
                 roles.put(adminRole.getName(), adminRole);
@@ -151,9 +149,18 @@ public class QuestServiceImpl implements QuestService {
         }
         return false;
     }
-    public Map<String, User> getUsers(){ return users; }
-    public Map<String, Role> getRoles(){ return roles; }
-    public Map<String, User> getLoggedInUsers(){ return loggedInUsers; }
+
+    public Map<String, User> getUsers() {
+        return users;
+    }
+
+    public Map<String, Role> getRoles() {
+        return roles;
+    }
+
+    public Map<String, User> getLoggedInUsers() {
+        return loggedInUsers;
+    }
 
     public ArrayList<Role> getRolesFromUser(String username) throws RemoteException {
         User user = users.get(username);
