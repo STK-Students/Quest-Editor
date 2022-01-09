@@ -16,7 +16,7 @@ public class PrintUtils {
         print("\n");
 
 
-        Color color = null;
+        Color color = Color.WHITE;
         List<Role> roleList = user.getRoleList();
         if (roleList.size() > 0) {
             Role role = roleList.get(0);
