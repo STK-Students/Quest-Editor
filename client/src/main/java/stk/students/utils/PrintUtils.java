@@ -5,6 +5,8 @@ import stk.students.ConfigManager;
 import stk.students.data.Role;
 import stk.students.data.User;
 
+import java.util.List;
+
 public class PrintUtils {
 
     private static final ConfigManager config = Client.getInstance().getConfig();
@@ -12,7 +14,15 @@ public class PrintUtils {
 
     public static void printUser(User user) {
         print("\n");
-        print(OUT_PREFIX + "Username: " + user.getUsername(), Color.BLUE);
+
+
+        Color color = null;
+        List<Role> roleList = user.getRoleList();
+        if (roleList.size() > 0) {
+            Role role = roleList.get(0);
+            color = role.getColor();
+        }
+        print(OUT_PREFIX + user.getUsername(), color);
         println(OUT_PREFIX + " E-Mail: " + user.getEmail());
     }
 
