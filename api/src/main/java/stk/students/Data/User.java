@@ -7,21 +7,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class User implements Serializable {
-    @Getter @Setter
+    @Getter
+    @Setter
     private String email;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String username;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String password;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ArrayList<Role> roleList = new ArrayList<>();
-
-    public User(String username, String email, String password, ArrayList<Role> roleList){
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roleList = roleList;
-    }
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -29,10 +26,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public void addRole(Role role){
+    public void addRole(Role role) {
         this.roleList.add(role);
     }
-    public void removeRole(Role role){
+
+    public void removeRole(Role role) {
         roleList.removeIf(roleItem -> roleItem.getName().equalsIgnoreCase(role.getName()));
     }
 }
