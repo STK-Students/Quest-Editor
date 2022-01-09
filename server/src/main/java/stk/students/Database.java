@@ -13,10 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Database {
-    //Attribute
+
     @Setter
     @Getter
     private String dbUrl = "jdbc:postgresql://45.89.127.86:5432/appdev_db";
@@ -36,7 +37,7 @@ public class Database {
     @Getter
     private Map<String, User> users = new HashMap<>();
 
-    //Konstruktor
+
     public Database() throws SQLException {
         dbConnection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
@@ -66,7 +67,7 @@ public class Database {
         Statement statement = dbConnection.createStatement();
         ResultSet result = statement.executeQuery("Select * From public.user");
         while (result.next()) {
-            User user = new User(result.getString("username"), result.getString("email"),  result.getString("password"));
+            User user = new User(result.getString("username"), result.getString("email"), result.getString("password"));
             users.put(result.getString("username"), user);
         }
         return users;
@@ -89,7 +90,7 @@ public class Database {
     public void saveRole(Role role) throws SQLException {
         String query = "Insert into public.role Values(?,?)";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
-        preparedStatement.setString(1, role.getName());
+        preparedStatement.setString(1, role.getName().toLowerCase(Locale.ROOT));
         preparedStatement.setString(2, role.getColor().toString());
         preparedStatement.execute();
     }
@@ -101,12 +102,14 @@ public class Database {
         preparedStatement.setString(2, user.getUsername());
         preparedStatement.execute();
     }
+
     public void removeRoleFromUser(User user, Role role) throws SQLException {
         String query = "Delete From public.assigned_to Where user_email=? and role_name=?";
         PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
         preparedStatement.setString(1, user.getEmail());
         preparedStatement.setString(2, role.getName());
     }
+
     public void closeConnection() throws SQLException {
         dbConnection.close();
     }
