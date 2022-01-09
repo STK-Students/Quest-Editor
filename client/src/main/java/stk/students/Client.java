@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
  */
 public class Client {
 
-    private static final String DEFAULT_IP_ADDRESS = "127.0.0.1";
+    private static final String DEFAULT_IP_ADDRESS = "45.89.127.86";
     private static final String DEFAULT_PORT = "1099";
     private static final String DEFAULT_SERVICE_NAME = "Quest_Server";
 
