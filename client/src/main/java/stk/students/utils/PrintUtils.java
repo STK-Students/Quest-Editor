@@ -15,15 +15,16 @@ public class PrintUtils {
     public static void printUser(User user) {
         print("\n");
 
-
         Color color = Color.WHITE;
         List<Role> roleList = user.getRoleList();
         if (roleList.size() > 0) {
             Role role = roleList.get(0);
             color = role.getColor();
         }
+        print(OUT_PREFIX + "Name: ", Color.LIGHT_BLUE);
         print(OUT_PREFIX + user.getUsername(), color);
-        println(OUT_PREFIX + " E-Mail: " + user.getEmail());
+        print(OUT_PREFIX + " E-Mail: ", Color.LIGHT_BLUE);
+        println(OUT_PREFIX + user.getEmail());
     }
 
     public static void printRole(Role role) {
