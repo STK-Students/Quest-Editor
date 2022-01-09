@@ -14,7 +14,7 @@ public class Client {
 
     private static final String DEFAULT_IP_ADDRESS = "45.89.127.86";
     private static final String DEFAULT_PORT = "1099";
-    private static final String DEFAULT_SERVICE_NAME = "Quest_Server";
+    private static final String DEFAULT_SERVICE_NAME = "Quest_Service";
 
     @Getter
     public static Client instance;
