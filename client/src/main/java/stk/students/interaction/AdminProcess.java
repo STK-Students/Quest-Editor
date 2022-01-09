@@ -19,12 +19,12 @@ import java.util.Map;
 import static stk.students.utils.PrintUtils.print;
 import static stk.students.utils.PrintUtils.printFromConfig;
 
-public class AdminGUI {
+public class AdminProcess {
 
     private final ConfigManager config = Client.getInstance().getConfig();
     private final QuestService server = Client.getInstance().getServer();
 
-    public AdminGUI() throws RemoteException {
+    public AdminProcess() throws RemoteException {
         showAdminOptions();
     }
 
@@ -129,5 +129,4 @@ public class AdminGUI {
         print("\n");
         return username;
     }
-
 }

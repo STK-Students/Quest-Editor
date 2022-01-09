@@ -10,7 +10,6 @@ import stk.students.utils.PrintUtils;
 
 import java.rmi.RemoteException;
 
-import static stk.students.utils.PrintUtils.printFromConfig;
 import static stk.students.utils.PrintUtils.printUser;
 import static stk.students.utils.PrintUtils.printlnFromConfig;
 
@@ -23,7 +22,7 @@ public class LoginProcess {
 
         User currentUser = Client.getInstance().getCurrentUser();
         if (server.userHasRole(currentUser, "Administrator")) {
-            new AdminGUI();
+            new AdminProcess();
         }
 
         server.disconnectUser(Client.getInstance().getCurrentUser());
