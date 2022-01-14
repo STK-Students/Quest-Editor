@@ -1,4 +1,4 @@
-package stk.students;
+package stk.students.utils;
 
 import org.yaml.snakeyaml.Yaml;
 

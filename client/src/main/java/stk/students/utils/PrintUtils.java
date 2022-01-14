@@ -1,7 +1,6 @@
 package stk.students.utils;
 
 import stk.students.Client;
-import stk.students.ConfigManager;
 import stk.students.data.Role;
 import stk.students.data.User;
 

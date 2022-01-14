@@ -1,7 +1,7 @@
 package stk.students.commandWindow;
 
 import stk.students.Client;
-import stk.students.ConfigManager;
+import stk.students.utils.ConfigManager;
 import stk.students.utils.Color;
 import stk.students.utils.ColorUtil;
 
