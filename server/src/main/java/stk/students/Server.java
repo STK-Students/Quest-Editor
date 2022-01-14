@@ -37,8 +37,7 @@ public class Server {
             Registry registry = LocateRegistry.createRegistry(port);
             registry.bind(serviceName, stub);
 
-            Naming.bind("rmi://" + ipAddress + ":" + port + "/" + serviceName, stub);
-        } catch (MalformedURLException | AlreadyBoundException | RemoteException e) {
+        } catch (AlreadyBoundException | RemoteException e) {
             e.printStackTrace();
         }
         System.out.println("Serving on '" + ipAddress + ":" + port + "/" + serviceName + "'.");
