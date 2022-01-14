@@ -2,6 +2,7 @@ package stk.students;
 
 import stk.students.data.Role;
 import stk.students.data.User;
+import stk.students.service.QuestService;
 import stk.students.utils.Color;
 
 import java.rmi.RemoteException;

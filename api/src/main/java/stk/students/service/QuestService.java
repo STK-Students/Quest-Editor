@@ -1,4 +1,4 @@
-package stk.students;
+package stk.students.service;
 
 import stk.students.data.Role;
 import stk.students.data.User;

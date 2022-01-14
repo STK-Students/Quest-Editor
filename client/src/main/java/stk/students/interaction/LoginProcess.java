@@ -1,7 +1,7 @@
 package stk.students.interaction;
 
 import stk.students.Client;
-import stk.students.QuestService;
+import stk.students.service.QuestService;
 import stk.students.commandWindow.DynamicAnswerWindow;
 import stk.students.commandWindow.FixedAnswerWindow;
 import stk.students.data.User;

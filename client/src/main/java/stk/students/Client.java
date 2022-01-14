@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import stk.students.data.User;
 import stk.students.interaction.LoginProcess;
+import stk.students.service.QuestService;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
