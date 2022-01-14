@@ -19,12 +19,6 @@ public class Role implements Serializable {
     @Setter
     private ArrayList<User> userList = new ArrayList<>();
 
-    public Role(String name, Color color, ArrayList<User> userList) {
-        this.name = name;
-        this.color = color;
-        this.userList = userList;
-    }
-
     public Role(String name, Color color) {
         this.name = name;
         this.color = color;
