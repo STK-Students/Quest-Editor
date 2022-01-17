@@ -50,6 +50,11 @@ public class AdminProcess {
     private void createRole() throws RemoteException {
         DynamicAnswerWindow roleNameWindow = new DynamicAnswerWindow("role.name");
         String roleName = roleNameWindow.getUserAnswer();
+        Role potentialRole = server.getRoles().get(roleName);
+        if (potentialRole != null) {
+            PrintUtils.printlnFromConfig("role.createDone.error");
+            return;
+        }
 
         FixedAnswerWindow roleColorWindow = new FixedAnswerWindow("role.color");
         List<String> colors = Arrays.stream(Color.values()).map(Color::toString).toList();
@@ -86,7 +91,7 @@ public class AdminProcess {
             if (success) {
                 PrintUtils.printlnFromConfig("role.actions.removeSuccess");
             }
-        } else if (option.equalsIgnoreCase("hinzufügen")){
+        } else if (option.equalsIgnoreCase("hinzufuegen")){
             FixedAnswerWindow userWindow = new FixedAnswerWindow("role.userSelect");
             List<String> userNames = users.values().stream().map(User::getUsername).toList();
             userWindow.addValidAnswers(userNames);
