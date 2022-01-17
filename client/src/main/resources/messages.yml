@@ -1,7 +1,7 @@
 #
 # Allgemein
 #
-possible_answer: "Antwortmöglichkeiten:"
+possible_answer: "Antwortmoeglichkeiten:"
 prefix:
   output: ""
   input:  "-> "
@@ -15,7 +15,7 @@ intro:
   answers:
     - "Registrieren"
     - "Anmelden"
-  error: "Ungültige Option."
+  error: "Ungueltige Option."
 
 onboarding:
   email:
@@ -23,7 +23,7 @@ onboarding:
     error: "Diese Email ist schon einem Account zugeordnet."
   username:
     message: "Wie heißt du?"
-    error: "Dieser Nutzername ist schon vergeben, überleg dir etwas anderes."
+    error: "Dieser Nutzername ist schon vergeben, ueberleg dir etwas anderes."
   password:
     message: "Wie soll dein Passwort lauten?"
   done:
@@ -35,38 +35,38 @@ login:
     message: "Bitte gib deinen Nutzernamen ein."
   password:
     message: "Wie lautet dein Passwort?"
-  error: "Falsches Passwort oder ungültiger Nutzername!"
+  error: "Falsches Passwort oder ungueltiger Nutzername!"
   success: "Login erfolgreich!"
 
 overview: "Aktuell eingeloggte Nutzer:"
 
 adminOptions:
-  message: "Du bist berechtigt administrative Tätigkeiten ausführen."
+  message: "Du bist berechtigt administrative Taetigkeiten ausfuehren."
   answers:
     - "Nutzer verwalten"
     - "Rolle erstellen"
     - "Rollen anzeigen"
     - "Programm beenden"
-  error: "Ungültige Option."
+  error: "Ungueltige Option."
 
 role:
 
   # Rollen-Verwaltung
   options:
-    message: "Es können nun die Rollen eines Nutzer modifiziert werden:"
+    message: "Es koennen nun die Rollen eines Nutzer modifiziert werden:"
     answers:
-    - "Hinzufügen"
+    - "Hinzufuegen"
     - "Entfernen"
     - "Abbrechen"
-    error: "Ungültige Option"
+    error: "Ungueltige Option"
   userSelect:
-    message: "Geben Sie den Nutzernamen aus der zuvor erschienenen Liste ein um einen Benutzer auszuwählen."
+    message: "Geben Sie den Nutzernamen aus der zuvor erschienenen Liste ein um einen Benutzer auszuwaehlen."
     error: "Dieser Benutzer existiert nicht."
   roleSelect:
-    message: "Geben Sie den Rollennamen aus der zuvor erschienenen Liste ein um eine Rolle auszuwählen."
-    error: "Die ausgewählte Rolle existiert nicht."
+    message: "Geben Sie den Rollennamen aus der zuvor erschienenen Liste ein um eine Rolle auszuwaehlen."
+    error: "Die ausgewaehlte Rolle existiert nicht."
   actions:
-    addSuccess: "Die Rolle wurde dem Nutzer hinzugefügt."
+    addSuccess: "Die Rolle wurde dem Nutzer hinzugefuegt."
     removeSuccess: "Die Rolle wurde dem Nutzer entfernt."
 
   # Rollen-Erstellung
@@ -77,12 +77,12 @@ role:
     message: "Wie soll die Farbe der neuen Rolle sein?"
     error: "Diese Farbe existiert nicht"
   createDone:
-    message: "Die Rolle wurde mit der gewünschten Farbe erstellt."
+    message: "Die Rolle wurde mit der gewuenschten Farbe erstellt."
     error: "Die Rolle konnte nicht erstellt werden! Gibt es sie schon?"
 
   # Rollen-Anzeige
   show:
-    message: "Geben Sie den Benutzer ein, von dem Sie die Rollen angezeigt bekommen möchten."
+    message: "Geben Sie den Benutzer ein, von dem Sie die Rollen angezeigt bekommen moechten."
     error: "Falscher Benutzer"
     result: "Der Nutzer hat folgende Rollen: "
     no-roles: "Keine Rollen..."
