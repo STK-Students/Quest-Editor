@@ -5,7 +5,9 @@ import lombok.Setter;
 import stk.students.data.User;
 import stk.students.interaction.LoginProcess;
 import stk.students.service.QuestService;
+import stk.students.utils.Color;
 import stk.students.utils.ConfigManager;
+import stk.students.utils.PrintUtils;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -24,7 +26,8 @@ public class Client {
     private final ConfigManager config = new ConfigManager("messages.yml");
     @Getter
     private QuestService server;
-    @Getter @Setter
+    @Getter
+    @Setter
     private User currentUser;
 
     public Client() {
@@ -48,11 +51,13 @@ public class Client {
     }
 
     private void connectToServer(final String ipAddress, final String port, final String serviceName) {
+        String RMI_URL = "rmi://" + ipAddress + ":" + port + "/" + serviceName;
         try {
-            server = (QuestService) Naming.lookup("rmi://" + ipAddress + ":" + port + "/" + serviceName);
+            server = (QuestService) Naming.lookup(RMI_URL);
             new LoginProcess();
-        } catch (RemoteException | NotBoundException | MalformedURLException e) {
-            //TODO: Better error handling
+        } catch (RemoteException e) {
+            PrintUtils.print("Zu '" + RMI_URL + "' konnte keine Verbindung aufgebaut werden.", Color.RED);
+        } catch (NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
     }
