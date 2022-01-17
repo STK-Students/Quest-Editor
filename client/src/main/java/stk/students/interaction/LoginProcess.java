@@ -1,14 +1,15 @@
 package stk.students.interaction;
 
 import stk.students.Client;
-import stk.students.service.QuestService;
 import stk.students.commandWindow.DynamicAnswerWindow;
 import stk.students.commandWindow.FixedAnswerWindow;
 import stk.students.data.User;
+import stk.students.service.QuestService;
 import stk.students.utils.Color;
 import stk.students.utils.PrintUtils;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 import static stk.students.utils.PrintUtils.printUser;
 import static stk.students.utils.PrintUtils.printlnFromConfig;
@@ -52,7 +53,7 @@ public class LoginProcess {
 
         String username = usernameWindow.getUserAnswer();
         String password = passwordWindow.getUserAnswer();
-        User user =  server.loginUser(username, password);
+        User user = server.loginUser(username, password);
         if (user == null) {
             printlnFromConfig("login.error", Color.RED, Color.BLINK);
             return login();
@@ -62,13 +63,29 @@ public class LoginProcess {
 
     private User register() throws RemoteException {
         DynamicAnswerWindow emailWindow = new DynamicAnswerWindow("onboarding.email");
-        DynamicAnswerWindow usernameWindow = new DynamicAnswerWindow("onboarding.username");
-        DynamicAnswerWindow passwordWindow = new DynamicAnswerWindow("onboarding.password");
-
         String email = emailWindow.getUserAnswer();
+        final List<String> emails = server.getUsers().values().stream().map(User::getEmail).toList();
+        if (emails.contains(email)) {
+            printlnFromConfig("onboarding.email.error");
+            return null;
+        }
+
+        DynamicAnswerWindow usernameWindow = new DynamicAnswerWindow("onboarding.username");
         String username = usernameWindow.getUserAnswer();
+        final List<String> usernames = server.getUsers().keySet().stream().toList();
+        if (usernames.contains(username)) {
+            printlnFromConfig("onboarding.username.error", Color.RED);
+            return null;
+        }
+
+        DynamicAnswerWindow passwordWindow = new DynamicAnswerWindow("onboarding.password");
         String password = passwordWindow.getUserAnswer();
-        return server.registerUser(username, email, password);
+
+        User potentialUser = server.registerUser(username, email, password);
+        if (potentialUser == null) {
+            printlnFromConfig("onboarding.username.error", Color.RED);
+        }
+        return potentialUser;
     }
 
     private void showLoggedInUsers() throws RemoteException {
