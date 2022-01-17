@@ -89,7 +89,7 @@ public class FixedAnswerWindow {
 
         if (!validAnswers.contains(userAnswer) && !validAnswers.isEmpty()) {
             println(errorMessage, Color.RED, Color.BLINK);
-            readUserAnswer();
+            return readUserAnswer();
         }
         print("\n");
         return userAnswer;
