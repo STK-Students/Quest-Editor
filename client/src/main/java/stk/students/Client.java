@@ -35,14 +35,14 @@ public class Client {
         connectToServer(DEFAULT_IP_ADDRESS, DEFAULT_PORT, DEFAULT_SERVICE_NAME);
     }
 
-    public Client(final String ipAdress) {
+    public Client(final String ipAddress) {
         instance = this;
-        connectToServer(ipAdress, DEFAULT_PORT, DEFAULT_SERVICE_NAME);
+        connectToServer(ipAddress, DEFAULT_PORT, DEFAULT_SERVICE_NAME);
     }
 
-    public Client(final String ipAdress, final String port) {
+    public Client(final String ipAddress, final String port) {
         instance = this;
-        connectToServer(ipAdress, port, DEFAULT_SERVICE_NAME);
+        connectToServer(ipAddress, port, DEFAULT_SERVICE_NAME);
     }
 
     public Client(final String ipAddress, final String port, final String serviceName) {
