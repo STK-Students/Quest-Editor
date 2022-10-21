@@ -8,14 +8,11 @@ public class Main {
      * @param args ip_address, port and service_name
      */
     public static void main(String[] args) {
-        if (args.length == 3) {
-            new Client(args[0], args[1], args[2]);
-        } else if (args.length == 2) {
-            new Client(args[0], args[1]);
-        } else if (args.length == 1) {
-            new Client(args[0]);
-        } else {
-            new Client();
+        switch (args.length) {
+            case 3 -> new Client(args[0], args[1], args[2]);
+            case 2 -> new Client(args[0], args[1]);
+            case 1 -> new Client(args[0]);
+            default -> new Client();
         }
     }
 }
